@@ -14,19 +14,18 @@ app.engine(
     "hbs",
     exphbs.engine({
         extname: ".hbs",
-        defaultLayout: "main.hbs",
+        defaultLayout: "main",
     })
 );
 app.set("view engine", "hbs");
 
-// Body parser
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
-// Server setup
-app.get("/", (req, res) => {
-    res.send("Hello World");
-});
+// Routes
+app.use("/", require("./routes/dashboard"));
 
 // Start the server
 const PORT = process.env.PORT || 3000;
