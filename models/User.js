@@ -1,6 +1,19 @@
 import mongoose from "mongoose";
 
-const sessionSchema = {
+const userSchema = {
     steamId: String,
-    lastLogin: Date,
+    displayName: String,
+    avatar: String,
+
+    friends:[{
+        steamId: String,
+        displayName: String,
+        status: String
+    }],
+
+    recentGames: [{
+        appId: String,
+        name: String,
+        playtime: Number
+    }],
 };
