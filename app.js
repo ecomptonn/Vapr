@@ -1,16 +1,29 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
+import exphbs from "express-handlebars";
 
-// Load config
 dotenv.config();
+const app = express();
 
 // Database  connection
 connectDB();
 
-// Server Setup
-const app = express();
+// Handlebars setup
+app.engine(
+    "handlebars",
+    exphbs.engine({
+        extname: ".hbs",
+        defaultLayout: "main.hbs",
+    })
+);
+app.set("view engine", "hbs");
 
+// Body parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Server setup
 app.get("/", (req, res) => {
     res.send("Hello World");
 });
