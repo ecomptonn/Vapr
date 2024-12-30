@@ -11,7 +11,7 @@ connectDB();
 
 // Handlebars setup
 app.engine(
-    "handlebars",
+    "hbs",
     exphbs.engine({
         extname: ".hbs",
         defaultLayout: "main.hbs",
