@@ -1,19 +1,14 @@
 import mongoose from "mongoose";
 
-const userSchema = {
-    steamId: String,
+const userSchema = new mongoose.Schema({
+    steamId: {
+        type: String,
+        unique: true,
+    },
     displayName: String,
-    avatar: String,
-
-    friends:[{
-        steamId: String,
-        displayName: String,
-        status: String
-    }],
-
-    recentGames: [{
-        appId: String,
-        name: String,
-        playtime: Number
-    }],
-};
+    avatarUrl: String,
+    lastLogin: {
+        type: Date,
+        default: Date.now,
+    },
+});
