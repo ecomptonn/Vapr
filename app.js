@@ -2,7 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import exphbs from "express-handlebars";
-import dashboard from "./routes/dashboard.js";
+
+// Import routes
+import indexRoute from "./routes/index.js";
 
 dotenv.config();
 const app = express();
@@ -26,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Routes
-app.use("/", dashboard);
+app.use("/", indexRoute);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
