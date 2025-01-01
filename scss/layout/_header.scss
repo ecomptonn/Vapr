@@ -3,7 +3,10 @@
     flex-direction: column;
     max-width: 20%;
     height: 100vh;
-    padding: 40px 80px 80px 60px;
+    margin: 40px 80px 80px 60px;
+}
+
+.nav-background {
     background-color: $secondary-color;
     border-radius: 10%;
 }
