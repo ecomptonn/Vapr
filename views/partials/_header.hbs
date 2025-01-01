@@ -1,15 +1,38 @@
 <header class="header">
-    <div class="logo"><img src="/images/vapr-logo.jpg" alt="Vapr Logo" /></div>
-    <div class="nav-wrapper">
-        <div class="flex-container">
-            <nav class="nav">
-                <ul>
-                    <li><a href="" class="">Home</a></li>
-                    <li><a href="" class="">Friends</a></li>
-                    <li><a href="" class="">Stats</a></li>
-                    <li><a href="" class="">Community</a></li>
-                </ul>
-            </nav>
+
+    {{! Profile Section }}
+    <div class="profile-section">
+        <div class="profile-container">
+            <div class="profile-info">
+                <img
+                    src="https://placehold.co/600x400/png"
+                    alt="Profile Picture"
+                    class="profile-image"
+                />
+                <span class="profile-name">tg.timmy</span>
+            </div>
         </div>
     </div>
+
+    {{! Logo Section }}
+    <div class="logo-section">
+        <div class="logo">
+            <img
+                class="logo"
+                src="/images/transparentvapr.png"
+                alt="Vapr Logo"
+            />
+            <span class="logo-text">Vapr</span>
+        </div>
+    </div>
+    <nav class="nav-menu">
+        <a href="#" class="nav-item active">{{! Icon Here }}
+            <span>Home</span></a>
+        <a href="#" class="nav-item">{{! Icon Here }}
+            <span>Friends</span></a>
+        <a href="#" class="nav-item">{{! Icon Here }}
+            <span>Stats</span></a>
+        <a href="#" class="nav-item">{{! Icon Here }}
+            <span>Community</span></a>
+    </nav>
 </header>
