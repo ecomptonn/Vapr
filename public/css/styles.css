@@ -51,6 +51,12 @@ table {
   border-spacing: 0;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -58,21 +64,66 @@ html {
 body {
   font-family: "Mona Sans", "Helvetica", sans-serif;
   background-color: #0c0f16;
-  color: #515155;
+  color: #fff;
   line-height: 1.5;
 }
 
 .header {
   display: flex;
   flex-direction: column;
-  width: 260px;
-  height: 900px;
-  margin: 0 32px 0 0;
+  max-width: 20%;
+  height: 100vh;
+  padding: 40px 80px 80px 60px;
+  background-color: #181b22;
+  border-radius: 10%;
 }
-.header .logo-section .logo {
-  width: 60px;
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  margin: 0 0 24px 0;
+}
+.profile-section .profile-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.profile-section .profile-container .profile-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.profile-section .profile-container .profile-info .profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.profile-section .profile-container .profile-info .profile-name {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.logo-section .logo {
+  display: flex;
+  height: 30px;
   margin: 0 0 32px 0;
 }
-.header .nav-wrapper {
-  max-width: 1200px;
+.logo-section .logo .logo-text {
+  align-self: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.nav-menu .nav-item {
+  height: 48px;
+  padding: 12px 16px;
 }/*# sourceMappingURL=styles.css.map */
