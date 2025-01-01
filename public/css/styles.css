@@ -51,10 +51,6 @@ table {
   border-spacing: 0;
 }
 
-.nav-wrapper {
-  max-width: 1200px;
-}
-
 html {
   font-size: 62.5%;
 }
@@ -64,4 +60,12 @@ body {
   background-color: #0c0f16;
   color: #515155;
   line-height: 1.5;
+}
+
+.header .logo {
+  width: 40px;
+  height: 40px;
+}
+.header .nav-wrapper {
+  max-width: 1200px;
 }/*# sourceMappingURL=styles.css.map */
