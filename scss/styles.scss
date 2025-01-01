@@ -1,9 +1,21 @@
-// Import partials
+// Import base settings
 @import "./base/reset";
 @import "./base/variables";
 @import "./base/mixins";
 
+// Import partials
+@import "./layout/header";
+@import "./layout/footer";
+@import "./components/buttons";
+
+// Global styles
+html {
+    font-size: 62.5%;
+}
 
 body {
     font-family: $font-family-base;
+    background-color: $primary-color;
+    color: $primary-font-color;
+    line-height: $line-height-base;
 }
