@@ -92,9 +92,6 @@ body a {
   margin: 0 0 24px 0;
 }
 .profile-section .profile-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
 }
 .profile-section .profile-container .profile-info {
@@ -103,8 +100,8 @@ body a {
   gap: 12px;
 }
 .profile-section .profile-container .profile-info .profile-image {
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 55px;
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
@@ -116,7 +113,8 @@ body a {
 
 .logo-section .logo {
   display: flex;
-  height: 30px;
+  width: 31px;
+  height: 31px;
   margin: 0 0 32px 0;
 }
 .logo-section .logo .logo-text {
