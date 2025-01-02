@@ -122,6 +122,10 @@ body a {
   align-self: center;
   font-size: 2rem;
   font-weight: 600;
+  background: linear-gradient(180deg, #fff 35%, #4a90e2 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .nav-menu {
@@ -130,8 +134,11 @@ body a {
   gap: 16px;
 }
 .nav-menu .nav-item {
+  display: flex;
+  align-items: center;
   height: 48px;
   padding: 12px 16px;
+  gap: 14px;
   font-size: 1.5rem;
   font-weight: 500;
 }
