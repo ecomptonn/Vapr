@@ -72,7 +72,7 @@ body a {
   text-decoration: none;
 }
 
-.header {
+.header-wrapper {
   display: flex;
   flex-direction: column;
   max-width: 25%;
@@ -162,11 +162,15 @@ body a {
   margin: auto 0 28px 0;
 }
 .nav .nav-item:hover {
+  color: #fff;
   background-color: #313237;
   transform: scale(1.05);
   border-radius: 25px;
 }
-.nav .nav-item img {
+.nav .nav-item:hover svg {
+  fill: #fff;
+}
+.nav .nav-item svg {
   width: 35px;
   height: 35px;
 }/*# sourceMappingURL=styles.css.map */
