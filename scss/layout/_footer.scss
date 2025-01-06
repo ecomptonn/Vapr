@@ -1,1 +1,11 @@
-@import "../base/variables";
+.footer-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 10px 10px 10px 10px;
+}
+
+.privacy-link {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 1.4rem;
+}
