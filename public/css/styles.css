@@ -77,7 +77,7 @@ body a {
   flex-direction: column;
   max-width: 25%;
   height: 100vh;
-  margin: 14px 34px 14px 22px;
+  padding: 14px 34px 14px 22px;
 }
 
 .nav-wrapper {
