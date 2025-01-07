@@ -7,10 +7,14 @@ router.get("/", (req, res) => {
     res.render("pages/dashboard/home");
 });
 
-// @desc    Privacy Policy
+// @desc    Privacy Page
 // @route   GET /privacy
 router.get("/privacy", (req, res) => {
-    res.render("pages/privacy");
+    res.render("pages/privacy", {
+        title: "Privacy Policy",
+        hideHeader: true,
+        hideFooter: true,
+    });
 });
 
 export default router;

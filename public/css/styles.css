@@ -184,4 +184,36 @@ body a {
   color: #fff;
   text-decoration: underline;
   font-size: 1.4rem;
+}
+
+.privacy-wrapper {
+  padding: 20px;
+}
+.privacy-wrapper h1 {
+  font-size: 4rem;
+}
+.privacy-wrapper h2 {
+  font-size: 3.4rem;
+}
+.privacy-wrapper h3 {
+  font-size: 2.4rem;
+}
+.privacy-wrapper h4 {
+  font-size: 2rem;
+}
+.privacy-wrapper h5 {
+  font-size: 1.8rem;
+}
+.privacy-wrapper p {
+  font-size: 1.6rem;
+}
+.privacy-wrapper span {
+  font-size: 1.4rem;
+}
+.privacy-wrapper ul {
+  list-style: disc;
+}
+.privacy-wrapper ul li {
+  font-size: 1.4rem;
+  margin: 0 0 0 30px;
 }/*# sourceMappingURL=styles.css.map */
