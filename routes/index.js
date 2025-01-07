@@ -11,9 +11,7 @@ router.get("/", (req, res) => {
 // @route   GET /privacy
 router.get("/privacy", (req, res) => {
     res.render("pages/privacy", {
-        title: "Privacy Policy",
-        hideHeader: true,
-        hideFooter: true,
+        layout: "policy",
     });
 });
 
