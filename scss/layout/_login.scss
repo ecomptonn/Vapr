@@ -1,3 +1,21 @@
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    backdrop-filter: blur(0px);
+}
+
+.modal-backdrop.show {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+}
 .popup {
     background-color: #fff;
     width: 450px;
@@ -8,6 +26,7 @@
     top: 50%;
     border-radius: 8px;
     display: none;
+    z-index: 1001;
 
     button {
         display: block;
@@ -47,7 +66,7 @@
     padding: 5px 0;
 }
 
-.privacy-login {
+.login-privacy-link {
     font-size: 1.4rem;
     color: #333;
     text-decoration: underline;
