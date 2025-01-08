@@ -1,0 +1,54 @@
+.popup {
+    background-color: #fff;
+    width: 450px;
+    padding: 30px 40px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    border-radius: 8px;
+    display: none;
+
+    button {
+        display: block;
+        margin: 0 0 20px auto;
+        background-color: transparent;
+        font-size: 30px;
+        color: #c5c5c5;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+
+    h2 {
+        color: #333;
+        font-size: 2rem;
+        font-weight: $font-weight-md;
+    }
+
+    p {
+        font-size: 1.4rem;
+        text-align: justify;
+        color: #333;
+        margin: 20px 0;
+    }
+}
+
+.login-btn {
+    display: block;
+    width: 150px;
+    position: relative;
+    margin: 10px auto;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.6rem;
+    text-decoration: none;
+    padding: 5px 0;
+}
+
+.privacy-login {
+    font-size: 1.4rem;
+    color: #333;
+    text-decoration: underline;
+}

@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&display=swap");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -221,4 +220,56 @@ body a {
   color: #fff;
   text-decoration: underline;
   font-weight: bold;
+}
+
+.popup {
+  background-color: #fff;
+  width: 450px;
+  padding: 30px 40px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  border-radius: 8px;
+  display: none;
+}
+.popup button {
+  display: block;
+  margin: 0 0 20px auto;
+  background-color: transparent;
+  font-size: 30px;
+  color: #c5c5c5;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.popup h2 {
+  color: #333;
+  font-size: 2rem;
+  font-weight: 500;
+}
+.popup p {
+  font-size: 1.4rem;
+  text-align: justify;
+  color: #333;
+  margin: 20px 0;
+}
+
+.login-btn {
+  display: block;
+  width: 150px;
+  position: relative;
+  margin: 10px auto;
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+  font-size: 1.6rem;
+  text-decoration: none;
+  padding: 5px 0;
+}
+
+.privacy-login {
+  font-size: 1.4rem;
+  color: #333;
+  text-decoration: underline;
 }/*# sourceMappingURL=styles.css.map */
