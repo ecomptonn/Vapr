@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&display=swap");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -216,4 +216,9 @@ body a {
 .privacy-wrapper ul li {
   font-size: 1.4rem;
   margin: 0 0 0 30px;
+}
+.privacy-wrapper a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
 }/*# sourceMappingURL=styles.css.map */
