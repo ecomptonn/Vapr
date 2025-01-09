@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import exphbs from "express-handlebars";
+import demoUser from "./data/demoUser.js";
 
 // Import routes
 import indexRoute from "./routes/index.js";

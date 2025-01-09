@@ -33,4 +33,4 @@ const demoUser = {
     ],
 };
 
-export default "demoUser";
+export default demoUser;
