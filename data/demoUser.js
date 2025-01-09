@@ -1,12 +1,12 @@
 const demoUser = {
     id: "DEMO_ID",
     displayName: "Demo User",
+    _isDemoUser: true,
     photos: [
         {
             value: "/images/demo-avatar.png",
         },
     ],
-    _isDemoUser: true,
     steamGames: [
         {
             name: "Counter-Strike 2",

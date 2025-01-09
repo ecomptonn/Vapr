@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import exphbs from "express-handlebars";
 import demoUser from "./data/demoUser.js";
+import session from "express-session";
+import passport from "passport";
+import configurePassport from "./config/passport.js";
 
 // Import routes
 import indexRoute from "./routes/index.js";
@@ -23,10 +26,21 @@ app.engine(
 );
 app.set("view engine", "hbs");
 
+// Sessions
+app.use(
+    session({
+        secret: "keyboard cat",
+        resave: false,
+        saveUninitialized: false,
+    })
+);
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use("/", indexRoute);
