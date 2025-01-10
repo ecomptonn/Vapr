@@ -6,6 +6,7 @@ import demoUser from "./data/demoUser.js";
 import session from "express-session";
 import passport from "passport";
 import configurePassport from "./config/passport.js";
+import MongoStore from "connect-mongo";
 
 // Import routes
 import indexRoute from "./routes/index.js";
@@ -38,6 +39,7 @@ app.use(
         secret: "keyboard cat",
         resave: false,
         saveUninitialized: false,
+        store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
     })
 );
 

@@ -1,4 +1,5 @@
 import { Strategy as SteamStrategy } from "passport-steam";
+import User from "../models/User.js";
 
 export default function configurePassport(passport) {
     // Serialize and deserialize user
@@ -16,12 +17,25 @@ export default function configurePassport(passport) {
             {
                 returnURL: "http://localhost:3000/auth/steam/return",
                 realm: "http://localhost:3000/",
-                apiKey: `${process.env.STEAM_API_KEY}`,
+                apiKey: process.env.STEAM_API_KEY,
             },
-            function (identifier, profile, done) {
-                User.findByOpenID({ openId: identifier }, function (err, user) {
-                    return done(err, user);
-                });
+            async (identifier, profile, done) => {
+                try {
+                    let user = await User.findOne({ openId: identifier });
+
+                    if (!user) {
+                        user = new User({
+                            steamId: profile.id,
+                            openId: identifier,
+                            displayName: profile.displayName,
+                            photos: profile.photos[2].value,
+                        });
+                        await user.save();
+                    }
+                    return done(null, user);
+                } catch (error) {
+                    return done(error);
+                }
             }
         )
     );

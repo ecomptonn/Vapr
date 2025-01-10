@@ -11,18 +11,13 @@
         <title>Vapr</title>
     </head>
     <body>
-        {{#unless hideHeader}}
-            <header>
-                {{>_header}}
-            </header>
-        {{/unless}}
+        <header>
+            {{>_header}}
+        </header>
         <main>
-            {{{body}}}
         </main>
-        {{#unless hideFooter}}
         <footer>
             {{>_footer}}
         </footer>
-        {{/unless}}
     </body>
 </html>

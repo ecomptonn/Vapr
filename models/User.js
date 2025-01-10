@@ -1,14 +1,23 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-    steamId: {
-        type: String,
-        unique: true,
+const UserSchema = new mongoose.Schema(
+    {
+        steamId: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        displayName: {
+            type: String,
+            required: true,
+        },
+        avatarUrl: String,
     },
-    displayName: String,
-    avatarUrl: String,
-    lastLogin: {
-        type: Date,
-        default: Date.now,
-    },
-});
+    {
+        timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
+    }
+);
+
+const User = mongoose.model("User", UserSchema);
+
+export default User;
