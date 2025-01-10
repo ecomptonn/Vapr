@@ -9,8 +9,14 @@ import configurePassport from "./config/passport.js";
 
 // Import routes
 import indexRoute from "./routes/index.js";
+import authRoute from "./routes/auth.js";
 
+// Load config
 dotenv.config();
+
+// Passport config
+configurePassport(passport);
+
 const app = express();
 
 // Database  connection
@@ -44,6 +50,7 @@ app.use(passport.session());
 
 // Routes
 app.use("/", indexRoute);
+app.use("/auth", authRoute);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
