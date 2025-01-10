@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
+        openId: { type: String, unique: true },
         displayName: {
             type: String,
             required: true,

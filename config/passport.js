@@ -21,19 +21,24 @@ export default function configurePassport(passport) {
             },
             async (identifier, profile, done) => {
                 try {
-                    let user = await User.findOne({ openId: identifier });
+                    let existingUser = await User.findOne({
+                        openId: identifier,
+                    });
 
-                    if (!user) {
-                        user = new User({
+                    if (!existingUser) {
+                        const newUser = new User({
                             steamId: profile.id,
                             openId: identifier,
                             displayName: profile.displayName,
-                            photos: profile.photos[2].value,
+                            avatarUrl: profile.photos[2].value,
                         });
-                        await user.save();
+                        await newUser.save();
+                        return done(null, newUser);
+                    } else {
+                        return done(null, existingUser);
                     }
-                    return done(null, user);
                 } catch (error) {
+                    console.error("Error finding or saving user", error);
                     return done(error);
                 }
             }
