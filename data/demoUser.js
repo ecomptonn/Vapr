@@ -4,7 +4,7 @@ const demoUser = {
     _isDemoUser: true,
     photos: [
         {
-            value: "/images/demo-avatar.png",
+            // value: png goes here,
         },
     ],
     steamGames: [
