@@ -4,7 +4,7 @@ const demoUser = {
     _isDemoUser: true,
     photos: [
         {
-            // value: png goes here,
+            value: "https://avatars.steamstatic.com/50767cea96889a121066ed45c098873cb258f8f3_full.jpg",
         },
     ],
     steamGames: [
