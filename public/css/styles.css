@@ -256,6 +256,8 @@ body a {
 }
 
 .popup {
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
   width: 450px;
   padding: 30px 40px;
@@ -268,8 +270,8 @@ body a {
   z-index: 1001;
 }
 .popup button {
-  display: block;
-  margin: 0 0 20px auto;
+  align-self: flex-end;
+  margin: 0 0 20px 0;
   background-color: transparent;
   font-size: 30px;
   color: #c5c5c5;
@@ -290,16 +292,21 @@ body a {
 }
 
 .login-btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 150px;
-  position: relative;
   margin: 10px auto;
-  text-align: center;
   background-color: #333;
   color: #fff;
   font-size: 1.6rem;
   text-decoration: none;
   padding: 5px 0;
+}
+.login-btn .steam-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .login-privacy-link {

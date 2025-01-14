@@ -1,6 +1,6 @@
 const demoUser = {
     id: "DEMO_ID",
-    displayName: "Demo User",
+    displayName: "Peptic",
     _isDemoUser: true,
     avatarUrl: "/images/demoAvatar.jpg",
     steamGames: [
@@ -50,27 +50,32 @@ const demoUser = {
             recentGames: [
                 {
                     name: "Apex Legends",
-                    playtime: 200,
+                    totalplaytime: 200,
+                    twoWeeksPlaytime: 42,
                     lastPlayed: "2024-01-12T15:30:00Z",
                 },
                 {
                     name: "Team Fortress 2",
-                    playtime: 1200,
+                    totalplaytime: 1200,
+                    twoWeeksPlaytime: 102,
                     lastPlayed: "2025-01-08T14:20:00Z",
                 },
                 {
                     name: "Sid Meier's Civilization VI",
-                    playtime: 800,
+                    totalPlaytime: 800,
+                    twoWeeksPlaytime: 26,
                     lastPlayed: "2025-01-07T22:15:00Z",
                 },
                 {
                     name: "Left 4 Dead 2",
-                    playtime: 700,
+                    totalplaytime: 700,
+                    twoWeeksPlaytime: 100,
                     lastPlayed: "2025-01-06T12:00:00Z",
                 },
                 {
                     name: "ARK: Survival Evolved",
-                    playtime: 1800,
+                    totalPlaytime: 1800,
+                    twoWeeksPlaytime: 150,
                     lastPlayed: "2024-12-28T11:30:00Z",
                 },
             ],
