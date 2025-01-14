@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import exphbs from "express-handlebars";
-import demoUser from "./data/demoUser.js";
 import session from "express-session";
 import passport from "passport";
 import configurePassport from "./config/passport.js";

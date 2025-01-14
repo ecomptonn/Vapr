@@ -291,6 +291,20 @@ body a {
   margin: 20px 0;
 }
 
+.demo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 150px;
+  margin: 10px auto;
+  background-color: #333;
+  color: #fff;
+  font-size: 1.6rem;
+  text-decoration: none;
+  padding: 5px 0;
+}
+
 .login-btn {
   display: flex;
   align-items: center;
