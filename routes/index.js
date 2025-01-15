@@ -1,4 +1,6 @@
 import express from "express";
+import { formatDate, timeAgo, calendarTime } from "../helpers/hbs.js";
+import { ensureAuth } from "../middleware/auth.js";
 const router = express.Router();
 
 // @desc    Login Page
@@ -11,8 +13,26 @@ router.get("/", (req, res) => {
 
 // @desc    Dashboard
 // @route   GET /dashboard
-router.get("/dashboard", (req, res) => {
-    res.render("pages/dashboard/home");
+router.get("/dashboard", ensureAuth, async (req, res) => {
+    try {
+        const user = req.user || req.session.user;
+
+        res.render("pages/dashboard/home", { user });
+    } catch (error) {
+        console.error(error);
+        res.render("error/500");
+    }
+});
+
+// @desc    Demo Dashboard
+// @route   GET /demo
+router.get("/demo", (req, res) => {
+    if (!req.sesson.user) {
+        req.session.user = demoUser;
+    }
+
+    const user = req.session.user;
+    res.render("pages/demo/home", { user });
 });
 
 // @desc    Privacy Page
