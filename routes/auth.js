@@ -19,12 +19,20 @@ router.get(
 // @desc    Logout User
 // @route   /auth/logout
 router.get("/logout", (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        res.redirect("/");
-    });
+    // Handle demo user logout
+    if (req.session.user && !req.session.passport) {
+        req.session.destroy((err) => {
+            if (err) return next(err);
+            return res.redirect("/");
+        });
+    }
+    // Handle Steam user logout
+    else {
+        req.logout((err) => {
+            if (err) return next(err);
+            res.redirect("/");
+        });
+    }
 });
 
 export default router;

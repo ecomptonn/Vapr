@@ -1,6 +1,7 @@
 import express from "express";
 import { formatDate, timeAgo, calendarTime } from "../helpers/hbs.js";
 import { ensureAuth } from "../middleware/auth.js";
+import demoUser from "../data/demoUser.js";
 const router = express.Router();
 
 // @desc    Login Page
@@ -27,7 +28,7 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
 // @desc    Demo Dashboard
 // @route   GET /demo
 router.get("/demo", (req, res) => {
-    if (!req.sesson.user) {
+    if (!req.session.user) {
         req.session.user = demoUser;
     }
 
