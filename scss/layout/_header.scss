@@ -91,10 +91,6 @@
             margin: 86px 0 0 0;
         }
 
-        &:last-child {
-            margin: auto 0 28px 0;
-        }
-
         &:hover {
             color: $primary-font-color;
             background-color: $hover-color;
@@ -110,5 +106,15 @@
             width: 35px;
             height: 35px;
         }
+    }
+
+    .nav-item.logout {
+        margin: auto 0 0 0;
+    }
+
+    .privacy-link {
+        display: flex;
+        justify-content: flex-end;
+        margin: 0 14px 14px 0;
     }
 }
