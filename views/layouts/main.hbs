@@ -11,13 +11,13 @@
         <title>Vapr</title>
     </head>
     <body>
-        <header>
-            {{>_header}}
-        </header>
-        <main>
-        </main>
-        <footer>
-            {{>_footer}}
-        </footer>
+        <div class="flex-container">
+            <header>
+                {{>_sidebar}}
+            </header>
+            <main>
+                {{{body}}}
+            </main>
+        </div>
     </body>
 </html>

@@ -13,8 +13,17 @@ body {
     background-color: $primary-color;
     color: $primary-font-color;
     line-height: $line-height-base;
+    min-height: 100vh;
 
-     a {
+    a {
         text-decoration: none;
-     }
+    }
+}
+
+main {
+    flex: 1;
+}
+
+.flex-container {
+    display: flex;
 }
