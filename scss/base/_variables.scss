@@ -5,6 +5,10 @@
 $primary-color: #0c0f16;
 $secondary-color: #181b22;
 $hover-color: #313237;
+$status-colors: (
+    "online": #4caf50,
+    "offline": #f44336,
+);
 
 // Typography
 $primary-font-color: #fff;

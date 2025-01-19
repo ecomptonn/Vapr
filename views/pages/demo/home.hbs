@@ -1,7 +1,17 @@
 <div class="main-wrapper">
-    <section class="main-top">
-        <h1>DEMO DASHBOARD</h1>
-
+    <section class="friends-container">
+        {{#each user.friends}}
+            <div class="friend-card">
+                <img src="{{avatar}}" alt="{{displayName}} avatar" />
+                <div class="friend-info">
+                    <h3 class="friend-name">{{displayName}}</h3>
+                    <p class="friend-status {{status}}">{{status}}</p>
+                    {{#if currentGame}}
+                        <p class="friend-game">Playing: {{currentGame}}</p>
+                    {{/if}}
+                </div>
+            </div>
+        {{/each}}
     </section>
     <section class="main-bottom"></section>
 </div>

@@ -4,3 +4,10 @@
     margin: 0 0 0 130px;
     padding: 14px 34px 14px 0;
 }
+
+.friends-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
