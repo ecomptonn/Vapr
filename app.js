@@ -10,6 +10,12 @@ import MongoStore from "connect-mongo";
 // Import routes
 import indexRoute from "./routes/index.js";
 import authRoute from "./routes/auth.js";
+import {
+    calendarTime,
+    formatDate,
+    sortFriendStatus,
+    timeAgo,
+} from "./helpers/hbs.js";
 
 // Load config
 dotenv.config();
@@ -26,6 +32,12 @@ connectDB();
 app.engine(
     "hbs",
     exphbs.engine({
+        helpers: {
+            formatDate,
+            timeAgo,
+            calendarTime,
+            sortFriendStatus,
+        },
         extname: ".hbs",
         defaultLayout: "main",
     })

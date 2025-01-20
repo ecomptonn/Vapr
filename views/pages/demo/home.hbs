@@ -1,6 +1,6 @@
 <div class="main-wrapper">
     <section class="friends-container">
-        {{#each user.friends}}
+        {{#each (sortFriendStatus user.friends)}}
             <div class="friend-card">
                 <img src="{{avatar}}" alt="{{displayName}} avatar" />
                 <div class="friend-info">

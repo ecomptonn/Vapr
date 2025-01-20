@@ -8,7 +8,7 @@ dayjs.extend(relativeTime);
 dayjs.extend(calendar);
 dayjs.extend(localizedFormat);
 
-// Helpers
+// Date Helpers
 const formatDate = (date) => {
     dayjs(date).format("MMM D, YYYY");
 };
@@ -21,4 +21,21 @@ const calendarTime = (date) => {
     dayjs(date).calendar();
 };
 
-export { formatDate, timeAgo, calendarTime };
+// Status Prio Helper
+const sortFriendStatus = (friends) => {
+    const statusPrio = {
+        Online: 1,
+        Away: 2,
+        Offline: 3,
+    };
+
+    return friends.sort((a, b) => {
+        if (statusPrio[a.status] !== statusPrio[b.status]) {
+            return statusPrio[a.status] - statusPrio[b.status];
+        }
+
+        return a.displayName.localeCompare(b.displayName);
+    });
+};
+
+export { formatDate, timeAgo, calendarTime, sortFriendStatus };
