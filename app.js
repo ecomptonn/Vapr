@@ -14,7 +14,7 @@ import {
     calendarTime,
     formatDate,
     sortFriendStatus,
-    timeAgo,
+    formatLastPlayed,
 } from "./helpers/hbs.js";
 
 // Load config
@@ -34,7 +34,7 @@ app.engine(
     exphbs.engine({
         helpers: {
             formatDate,
-            timeAgo,
+            formatLastPlayed,
             calendarTime,
             sortFriendStatus,
         },

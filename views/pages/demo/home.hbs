@@ -1,19 +1,84 @@
 <div class="main-wrapper">
-    <section class="friends-container">
-        {{#each (sortFriendStatus user.friends)}}
-            <div class="friend-card">
-                <img src="{{avatar}}" alt="{{displayName}} avatar" />
-                <div class="friend-info">
-                    <h3 class="friend-name">{{displayName}}</h3>
-                    <p class="friend-status {{status}}">{{status}}</p>
-                    {{#if currentGame}}
-                        <p class="friend-game">Playing: {{currentGame}}</p>
-                    {{/if}}
+    <div class="carousel-container">
+        <button
+            class="carousel-container__nav-button carousel-container__nav-button--prev"
+            data-carousel="games"
+            data-direction="prev"
+        >
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="carousel-container__content" id="games-carousel">
+
+            {{#each user.steamGames}}
+                <div class="game-card">
+                    <div class="game-card__image-container">
+                        <img
+                            src="{{img}}"
+                            alt="{{name}}"
+                            class="game-card__image"
+                        />
+                        <div class="game-card__overlay">
+                            <h3 class="game-card__title">{{name}}</h3>
+                        </div>
+                    </div>
+
+                    <div class="game-card__details">
+                        <div class="game-card__stat">
+                            <span>Total Playtime:</span>
+                            <span>{{totalPlaytime}} hrs</span>
+                        </div>
+
+                        <div class="game-card__stat">
+                            <span>Last 2 Weeks:</span>
+                            <span>{{twoWeeksPlaytime}} hrs</span>
+                        </div>
+
+                        <div class="game-card__last-played">
+                            Last played:
+                            {{formatLastPlayed lastPlayed}}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        {{/each}}
-    </section>
-    <section class="main-bottom">
-        
-    </section>
+            {{/each}}
+        </div>
+        <button
+            class="carousel-container__nav-button carousel-container__nav-button--next"
+            data-carousel="games"
+            data-direction="next"
+        >
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    <div class="carousel-container">
+        <button
+            class="carousel-container__nav-button carousel-container__nav-button--prev"
+            data-carousel="friends"
+            data-direction="prev"
+        >
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="carousel-container__content" id="friends-carousel">
+            {{#each (sortFriendStatus user.friends)}}
+                <div class="friend-card">
+                    <img src="{{avatar}}" alt="{{displayName}} avatar" />
+                    <div class="friend-info">
+                        <h3 class="friend-name">{{displayName}}</h3>
+                        <p class="friend-status {{status}}">{{status}}</p>
+                        {{#if currentGame}}
+                            <p class="friend-game">Playing: {{currentGame}}</p>
+                        {{/if}}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+
+        <button
+            class="carousel-container__nav-button carousel-container__nav-button--next"
+            data-carousel="friends"
+            data-direction="next"
+        >
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
 </div>
