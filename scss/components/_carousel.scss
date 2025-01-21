@@ -1,38 +1,43 @@
 .carousel-container {
     position: relative;
+    flex-shrink: 0;
+}
 
-    &__content {
-        display: flex;
-        gap: 10px;
-        overflow: hidden;
-    }
+.carousel-container__content {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 8px 0;
+    scrollbar-width: none;
+}
 
-    &__nav-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.6);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 10;
+.carousel-container__content::-webkit-scrollbar {
+    display: none;
+}
 
-        &:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
+.carousel-container__nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        &--prev {
-            left: -20px;
-        }
+.carousel-container__nav-button--prev {
+    left: -20px;
+}
 
-        &--next {
-            right: -20px;
-        }
-    }
+.carousel-container__nav-button--next {
+    right: -20px;
 }

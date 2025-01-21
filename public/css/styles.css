@@ -80,34 +80,44 @@ main {
 
 .carousel-container {
   position: relative;
+  flex-shrink: 0;
 }
+
 .carousel-container__content {
   display: flex;
-  gap: 10px;
-  overflow: hidden;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  padding: 8px 0;
+  scrollbar-width: none;
 }
+
+.carousel-container__content::-webkit-scrollbar {
+  display: none;
+}
+
 .carousel-container__nav-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: none;
-  border-radius: 50%;
+  z-index: 10;
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: white;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  z-index: 10;
 }
-.carousel-container__nav-button:hover {
-  background: rgba(0, 0, 0, 0.8);
-}
+
 .carousel-container__nav-button--prev {
   left: -20px;
 }
+
 .carousel-container__nav-button--next {
   right: -20px;
 }
@@ -187,60 +197,50 @@ main {
   text-overflow: ellipsis;
 }
 
-.games-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 10px;
+.game-card {
+  flex: 0 0 300px;
+  background: #1f2937;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.game-card {
-  flex: 0 1 300px;
-  background-color: rgb(31, 31, 31);
-  border-radius: 5px;
-  overflow: hidden;
-  transition: transform 0.2s;
-}
-.game-card:hover {
-  transform: translateY(-2px);
-}
 .game-card__image-container {
   position: relative;
   height: 150px;
 }
+
 .game-card__image {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
 }
+
 .game-card__overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-  padding: 1rem;
+  padding: 16px;
 }
+
 .game-card__title {
   color: white;
-  font-weight: 600;
-  margin: 0;
 }
+
 .game-card__details {
-  padding: 1rem;
+  padding: 16px;
 }
+
 .game-card__stat {
   display: flex;
   justify-content: space-between;
-  color: rgb(209, 213, 219);
-  font-size: 1.2rem;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
+
 .game-card__last-played {
-  color: rgb(156, 163, 175);
-  font-size: 1.2rem;
-  margin-top: 1.2rem;
+  margin-top: 12px;
 }
 
 .sidebar-wrapper {
@@ -356,8 +356,12 @@ main {
 
 .main-wrapper {
   display: flex;
+  overflow: hidden;
+  justify-content: space-between;
   flex-direction: column;
-  gap: 20px;
+  min-height: 100%;
+  padding: 10px;
+  margin: 10px;
 }
 
 .friends-container {

@@ -1,14 +1,21 @@
-<div class="main-wrapper">
+<section class="main-wrapper">
     <div class="carousel-container">
         <button
             class="carousel-container__nav-button carousel-container__nav-button--prev"
             data-carousel="games"
             data-direction="prev"
         >
-            <i class="fas fa-chevron-left"></i>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="48px"
+                viewBox="0 -960 960 960"
+                width="48px"
+                fill="#FFFFFF"
+            ><path
+                    d="M561-240 320-481l241-241 43 43-198 198 198 198-43 43Z"
+                /></svg>
         </button>
         <div class="carousel-container__content" id="games-carousel">
-
             {{#each user.steamGames}}
                 <div class="game-card">
                     <div class="game-card__image-container">
@@ -46,7 +53,15 @@
             data-carousel="games"
             data-direction="next"
         >
-            <i class="fas fa-chevron-right"></i>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="48px"
+                viewBox="0 -960 960 960"
+                width="48px"
+                fill="#FFFFFF"
+            ><path
+                    d="M530-481 332-679l43-43 241 241-241 241-43-43 198-198Z"
+                /></svg>
         </button>
     </div>
     <div class="carousel-container">
@@ -55,9 +70,16 @@
             data-carousel="friends"
             data-direction="prev"
         >
-            <i class="fas fa-chevron-left"></i>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="48px"
+                viewBox="0 -960 960 960"
+                width="48px"
+                fill="#FFFFFF"
+            ><path
+                    d="M561-240 320-481l241-241 43 43-198 198 198 198-43 43Z"
+                /></svg>
         </button>
-
         <div class="carousel-container__content" id="friends-carousel">
             {{#each (sortFriendStatus user.friends)}}
                 <div class="friend-card">
@@ -72,13 +94,20 @@
                 </div>
             {{/each}}
         </div>
-
         <button
-            class="carousel-container__nav-button carousel-container__nav-button--next"
-            data-carousel="friends"
-            data-direction="next"
+            class="carousel-container__nav-button carousel-container__nav-button--prev"
+            data-carousel="games"
+            data-direction="prev"
         >
-            <i class="fas fa-chevron-right"></i>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="48px"
+                viewBox="0 -960 960 960"
+                width="48px"
+                fill="#FFFFFF"
+            ><path
+                    d="M530-481 332-679l43-43 241 241-241 241-43-43 198-198Z"
+                /></svg>
         </button>
     </div>
-</div>
+</section>

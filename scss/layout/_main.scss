@@ -1,7 +1,11 @@
 .main-wrapper {
     display: flex;
+    overflow: hidden;
+    justify-content: space-between;
     flex-direction: column;
-    gap: 20px;
+    min-height: 100%;
+    padding: 10px;
+    margin: 10px;
 }
 
 .friends-container {
