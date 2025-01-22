@@ -1,16 +1,17 @@
 .carousel-container {
     position: relative;
-    flex-shrink: 0;
+    margin-bottom: 24px;
 }
 
 .carousel-container__content {
     display: flex;
     gap: 16px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: scroll;
+    overflow-y: visible;
     scroll-behavior: smooth;
-    padding: 8px 0;
+    padding: 8px 40px;
     scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .carousel-container__content::-webkit-scrollbar {
@@ -35,9 +36,9 @@
 }
 
 .carousel-container__nav-button--prev {
-    left: -20px;
+    left: 0;
 }
 
 .carousel-container__nav-button--next {
-    right: -20px;
+    right: 0;
 }

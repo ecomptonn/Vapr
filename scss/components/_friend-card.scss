@@ -1,23 +1,23 @@
 .friend-card {
+    flex: 0 0 240px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #181b22;
     border-radius: 16px;
     padding: 25px 15px 55px;
-    width: 240px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     position: relative;
+}
 
-    img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        background: white;
-        padding: 4px;
-        margin: 0 0 10px 0;
-    }
+.friend-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: white;
+    padding: 4px;
+    margin: 0 0 10px 0;
 }
 
 .friend-info {
@@ -26,7 +26,7 @@
 }
 
 .friend-name {
-    color: $primary-font-color;
+    color: var(--primary-font-color);
     margin: 0 0 10px 0;
     font-size: 1.4rem;
 }
@@ -41,19 +41,19 @@
     gap: 5px;
     margin: 0;
 
-    &::before {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        display: inline-block;
-    }
-
     @each $status, $color in $status-colors {
         &.#{$status}::before {
             background-color: $color;
         }
     }
+}
+
+.friend-status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
 }
 
 .friend-game {

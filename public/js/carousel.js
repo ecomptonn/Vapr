@@ -1,42 +1,28 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const carousels = {
-        games: {
-            element: document.getElementById("games-carousel"),
-            position: 0,
-        },
-        friends: {
-            element: document.getElementById("friends-carousel"),
-            position: 0,
-        },
-    };
+document
+    .querySelectorAll(".carousel-container__nav-button")
+    .forEach((button) => {
+        button.addEventListener("click", () => {
+            const direction = button.dataset.direction;
+            const carouselId = button.dataset.carousel;
+            const container = document.getElementById(`${carouselId}-carousel`);
 
-    const cardWidth = 300; // Width of each card + gap
-    const visibleCards = 4; // Number of cards visible at once
+            // Calculate the visible width of the container
+            const containerWidth = container.clientWidth - 80; // Subtract padding
 
-    document
-        .querySelectorAll(".carousel-container__nav-button")
-        .forEach((button) => {
-            button.addEventListener("click", () => {
-                const carouselId = button.dataset.carousel;
-                const direction = button.dataset.direction;
-                const carousel = carousels[carouselId];
+            // Calculate how many cards can fit
+            const cardWidth = direction === "games" ? 300 : 240; // Game or friend card width
+            const gap = 16;
+            const cardsPerView = Math.floor(containerWidth / (cardWidth + gap));
 
-                if (direction === "next") {
-                    carousel.position = Math.max(
-                        -(carousel.element.children.length - visibleCards) *
-                            cardWidth,
-                        carousel.position - cardWidth
-                    );
-                } else {
-                    carousel.position = Math.min(
-                        0,
-                        carousel.position + cardWidth
-                    );
-                }
+            // Calculate scroll amount (width of visible cards + gap)
+            const scrollAmount =
+                direction === "prev"
+                    ? -(cardsPerView * (cardWidth + gap))
+                    : cardsPerView * (cardWidth + gap);
 
-                carousel.element.style.transform = `translateX(${carousel.position}px)`;
-                carousel.element.style.transition =
-                    "transform 0.3s ease-in-out";
+            container.scrollBy({
+                left: scrollAmount,
+                behavior: "smooth",
             });
         });
-});
+    });
