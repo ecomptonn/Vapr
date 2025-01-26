@@ -1,8 +1,8 @@
 .main-wrapper {
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
     overflow-y: auto;
     padding: 24px;
 }

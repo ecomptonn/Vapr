@@ -92,7 +92,6 @@ main {
   scroll-behavior: smooth;
   padding: 8px 0;
   scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
 .carousel-container__content::-webkit-scrollbar {
@@ -109,7 +108,7 @@ main {
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.6);
   border: none;
-  color: white;
+  color: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -360,10 +359,10 @@ main {
 }
 
 .main-wrapper {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
   overflow-y: auto;
   padding: 24px;
 }
