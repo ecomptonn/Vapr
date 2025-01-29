@@ -38,4 +38,45 @@ const sortFriendStatus = (friends) => {
     });
 };
 
-export { formatDate, formatLastPlayed, calendarTime, sortFriendStatus };
+// Recent games Helper
+const recentGames = (games) => {
+    const twoWeeksAgo = dayjs().subtract(2, "weeks");
+
+    return games
+        .filter((game) => dayjs(game.lastPlayed).isAfter(twoWeeksAgo))
+        .slice(0, 8); // Limit to 8 games
+};
+
+// Comparison Helpers
+const eq = (a, b) => {
+    return a === b;
+};
+
+const gt = (a, b) => {
+    return a > b;
+};
+
+const lt = (a, b) => {
+    return a < b;
+};
+
+const gte = (a, b) => {
+    return a >= b;
+};
+
+const lte = (a, b) => {
+    return a <= b;
+};
+
+export {
+    formatDate,
+    formatLastPlayed,
+    calendarTime,
+    sortFriendStatus,
+    recentGames,
+    eq,
+    gt,
+    lt,
+    gte,
+    lte,
+};

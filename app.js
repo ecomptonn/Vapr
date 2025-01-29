@@ -6,16 +6,22 @@ import session from "express-session";
 import passport from "passport";
 import configurePassport from "./config/passport.js";
 import MongoStore from "connect-mongo";
-
-// Import routes
-import indexRoute from "./routes/index.js";
-import authRoute from "./routes/auth.js";
 import {
     calendarTime,
     formatDate,
     sortFriendStatus,
     formatLastPlayed,
+    eq,
+    gt,
+    lt,
+    gte,
+    lte,
+    recentGames,
 } from "./helpers/hbs.js";
+
+// Import routes
+import indexRoute from "./routes/index.js";
+import authRoute from "./routes/auth.js";
 
 // Load config
 dotenv.config();
@@ -37,6 +43,12 @@ app.engine(
             formatLastPlayed,
             calendarTime,
             sortFriendStatus,
+            recentGames,
+            eq,
+            gt,
+            lt,
+            gte,
+            lte,
         },
         extname: ".hbs",
         defaultLayout: "main",

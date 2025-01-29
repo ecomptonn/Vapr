@@ -200,9 +200,15 @@ main {
   text-overflow: ellipsis;
 }
 
+.game-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .game-card {
   flex: 0 0 300px;
-  background: #1f2937;
+  background: #181b22;
   border-radius: 8px;
   overflow: hidden;
 }
