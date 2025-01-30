@@ -1,3 +1,4 @@
+// Demo user data
 const demoUser = {
     id: "DEMO_ID",
     displayName: "Pepticport",
