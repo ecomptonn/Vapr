@@ -1,3 +1,4 @@
+// Database Config
 import mongoose from "mongoose";
 
 const connectDB = async () => {
