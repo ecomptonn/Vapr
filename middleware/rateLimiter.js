@@ -1,1 +1,1 @@
-// API rate limiter
+// API rate limit
