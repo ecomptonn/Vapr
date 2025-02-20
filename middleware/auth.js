@@ -1,4 +1,3 @@
-// ensure steam user
 const ensureAuth = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
@@ -7,7 +6,6 @@ const ensureAuth = (req, res, next) => {
     }
 };
 
-// ensure user is a demo user
 const ensureDemo = (req, res, next) => {
     if (req.session.user?._isDemoUser) {
         return next();
