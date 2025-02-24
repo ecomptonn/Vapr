@@ -35,6 +35,18 @@ router.get("/demo", (req, res) => {
     res.render("pages/demo/home", { user });
 });
 
+// @desc    Demo Friends
+// @route   GET /demo/friends
+router.get("/demo/friends", (req, res) => {
+    res.render("pages/demo/friends", { user: req.session.user });
+});
+
+// @desc    Friends
+// @route   GET /friends
+router.get("/friends", (req, res) => {
+    res.render("pages/dashboard/friends");
+});
+
 // @desc    Privacy Page
 // @route   GET /privacy
 router.get("/privacy", (req, res) => {
