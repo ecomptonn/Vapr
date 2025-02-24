@@ -40,11 +40,17 @@ const sortFriendStatus = (friends) => {
 
 // Recent games Helper
 const recentGames = (games) => {
-    const twoWeeksAgo = dayjs().subtract(2, "weeks");
+    if (!games || !Array.isArray(games)) {
+        return [];
+    }
 
+    // Sort games by lastPlayed date, most recent first
     return games
-        .filter((game) => dayjs(game.lastPlayed).isAfter(twoWeeksAgo))
-        .slice(0, 8); // Limit to 8 games
+        .sort(
+            (a, b) =>
+                dayjs(b.lastPlayed).valueOf() - dayjs(a.lastPlayed).valueOf()
+        )
+        .slice(0, 8);
 };
 
 // Comparison Helpers

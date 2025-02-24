@@ -173,7 +173,7 @@ main {
   background-color: #f44336;
 }
 .friend-status.Away::before {
-  background-color: #ec8c1d;
+  background-color: #e2861c;
 }
 
 .friend-status::before {
@@ -202,6 +202,7 @@ main {
 
 .game-card-container {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
 }

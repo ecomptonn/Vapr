@@ -18,12 +18,10 @@
                         <span>Total Playtime:</span>
                         <span>{{totalPlaytime}} hrs</span>
                     </div>
-
                     <div class="game-card__stat">
                         <span>Last 2 Weeks:</span>
                         <span>{{twoWeeksPlaytime}} hrs</span>
                     </div>
-
                     <div class="game-card__last-played">
                         Last Played:
                         {{formatLastPlayed lastPlayed}}
@@ -52,7 +50,7 @@
         <div class="carousel-container__content" id="friends-carousel">
             {{#each user.friends}}
                 {{#if (eq status "Online")}}
-                {{!-- friend card render --}}
+                    {{! friend card render }}
                     <div class="friend-card">
                         <img src="{{avatar}}" alt="{{displayName}} avatar" />
                         <div class="friend-info">
