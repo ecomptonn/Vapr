@@ -38,13 +38,35 @@ router.get("/demo", (req, res) => {
 // @desc    Demo Friends
 // @route   GET /demo/friends
 router.get("/demo/friends", (req, res) => {
-    res.render("pages/demo/friends", { user: req.session.user });
+    if (!req.session.user) {
+        req.session.user = demoUser;
+    }
+
+    const user = req.session.user;
+    res.render("pages/demo/friends", { user });
 });
 
 // @desc    Friends
 // @route   GET /friends
-router.get("/friends", (req, res) => {
+router.get("/friends", ensureAuth, (req, res) => {
     res.render("pages/dashboard/friends");
+});
+
+// @desc    Demo Stats
+// @route   GET /demo/stats
+router.get("/demo/stats", (req, res) => {
+    if (!req.session.user) {
+        req.session.user = demoUser;
+    }
+
+    const user = req.session.user;
+    res.render("pages/demo/stats", { user });
+});
+
+// @desc    Stats
+// @route   GET /stats
+router.get("/stats", ensureAuth, (req, res) => {
+    res.render("pages/dashboard/stats", { user: req.session.user });
 });
 
 // @desc    Privacy Page
