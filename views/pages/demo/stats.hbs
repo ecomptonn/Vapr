@@ -1,3 +1,32 @@
-<section class="stats" id="stats">
-    <h1>Stats Page</h1>
+<section class="main-wrapper" id="stats">
+    <div class="game-card-container">
+        {{#each user.steamGames}}
+            <div class="game-card">
+                <div class="game-card__image-container">
+                    <img
+                        src="{{img}}"
+                        alt="{{name}}"
+                        class="game-card__image"
+                    />
+                    <div class="game-card__overlay">
+                        <h3 class="game-card__title">{{name}}</h3>
+                    </div>
+                </div>
+                <div class="game-card__details">
+                    <div class="game-card__stat">
+                        <span>Total Playtime:</span>
+                        <span>{{totalPlaytime}} hrs</span>
+                    </div>
+                    <div class="game-card__stat">
+                        <span>Last 2 Weeks:</span>
+                        <span>{{twoWeeksPlaytime}} hrs</span>
+                    </div>
+                    <div class="game-card__last-played">
+                        Last Played:
+                        {{formatLastPlayed lastPlayed}}
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
 </section>
