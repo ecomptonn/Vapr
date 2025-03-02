@@ -38,7 +38,7 @@ const demoUser = {
             totalPlaytime: 830,
             twoWeeksPlaytime: 100,
             img: "/images/marvelRivalsIcon.png",
-            lastPlayed: "2024-09-10T13:46:02Z",
+            lastPlayed: "2024-02-10T13:46:02Z",
         },
         {
             name: "Apex Legends",
@@ -52,7 +52,7 @@ const demoUser = {
             totalPlaytime: 1800,
             twoWeeksPlaytime: 30,
             img: "/images/falloutIcon.png",
-            lastPlayed: "2024-11-22T16:49:57Z",
+            lastPlayed: "2024-06-22T16:49:57Z",
         },
         {
             name: "The Witcher 3: Wild Hunt",
@@ -66,7 +66,7 @@ const demoUser = {
             totalPlaytime: 800,
             twoWeeksPlaytime: 15,
             img: "/images/darkSoulsIcon.png",
-            lastPlayed: "2024-09-09T05:22:41Z",
+            lastPlayed: "2024-12-09T05:22:41Z",
         },
     ],
     friends: [
