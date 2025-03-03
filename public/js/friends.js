@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Get user type from data attribute
     const isDemoUser = document.body.dataset.userType === "demo";
-    console.log(isDemoUser);
 
     const friendElements = document.querySelectorAll(".friend-card");
 

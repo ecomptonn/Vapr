@@ -48,7 +48,7 @@ router.get("/demo/friends", (req, res) => {
 
 // @desc    Demo Friend Detail Page
 // @route   GET /demo/friends/:friendName
-router.get("/demo/friends/:friendName", (req, res) => {
+router.get("/demo/friend/:friendName", (req, res) => {
     if (!req.session.user) {
         req.session.user = demoUser;
     }
