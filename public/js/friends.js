@@ -1,10 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const friendElements = document.querySelectorAll(".friend-item");
+    // Get user type from data attribute
+    const isDemoUser = document.body.dataset.userType;
+
+    const friendElements = document.querySelectorAll(".friend-card");
 
     friendElements.forEach((friend) => {
         friend.addEventListener("click", () => {
-            const friendName = friend.dataset.friendName;
-            window.location.href = `/friend/${encodeURIComponent(friendName)}`;
+            const friendNameElement = friend.querySelector(".friend-name");
+            const friendName = friendNameElement
+                ? friendNameElement.textContent.trim()
+                : null;
+
+            if (friendName) {
+                // Route based on user type
+                if (isDemoUser) {
+                    window.location.href = `/demo/friend/${encodeURIComponent(
+                        friendName
+                    )}`;
+                } else {
+                    window.location.href = `/friend/${encodeURIComponent(
+                        friendName
+                    )}`;
+                }
+            } else {
+                console.error("Could not find friend name!");
+            }
         });
     });
 });

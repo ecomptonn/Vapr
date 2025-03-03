@@ -5,7 +5,6 @@ function handleCarouselScroll(carouselId, direction) {
     const cards = container.querySelectorAll(".game-card, .friend-card");
     if (cards.length === 0) return;
 
-    const cardWidth = cards[0].offsetWidth + 16;
     const visibleWidth = container.offsetWidth - 40;
     const maxScroll = container.scrollWidth - visibleWidth;
     let scrollAmount;
