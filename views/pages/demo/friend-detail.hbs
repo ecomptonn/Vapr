@@ -1,65 +1,32 @@
-<div class="container">
-    <div class="profile-header mb-4">
-        <a href="/demo/friends" class="btn btn-secondary btn-sm">
-            <i class="fas fa-arrow-left"></i> Back to Friends
-        </a>
-    </div>
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="d-flex align-items-center">
-                <img src="{{friend.avatar}}" alt="{{friend.displayName}}'s avatar" class="friend-avatar-lg me-3">
-                <div>
-                    <h2 class="mb-1">{{friend.displayName}}</h2>
-                    <span class="badge 
-                    {{#if (eq friend.status 'Online')}}
-                    bg-success
-                    {{else}}
-                    bg-secondary
-                    {{/if}}
-                     mb-2">
-                        {{friend.status}}
-                    </span>
-                    {{#if friend.currentGame}}
-                        <p class="text-highlight mb-0">
-                            Currently playing: <strong>{{friend.currentGame}}</strong>
-                        </p>
-                    {{/if}}
-                </div>
-            </div>
-        </div>
-    </div>
-    <h3 class="mb-3">Recent Games</h3>
-    <div class="row">
-        {{#each friend.recentGames}}
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card game-card h-100">
-                    <div class="card-body">
-                        <h4 class="card-title mb-3">{{this.name}}</h4>
-                        <div class="game-stats">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted">Total Playtime:</span>
-                                <span class="text-highlight">{{this.totalPlaytime}}</span>
-                            </div>
-                            
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted">Last 2 Weeks:</span>
-                                <span class="text-highlight">{{this.twoWeeksPlaytime}}</span>
-                            </div>
-                            
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted">Last Played:</span>
-                                <span class="text-highlight">{{this.lastPlayed}}</span>
-                            </div>
-                        </div>
+<section class="main-wrapper">
+    <div class="game-card-container">
+        {{#each friend.steamGames}}
+            <div class="game-card">
+                <div class="game-card__image-container">
+                    <img
+                        src="{{img}}"
+                        alt="{{name}}"
+                        class="game-card__image"
+                    />
+                    <div class="game-card__overlay">
+                        <h3 class="game-card__title">{{name}}</h3>
                     </div>
                 </div>
-            </div>
-        {{else}}
-            <div class="col-12">
-                <div class="alert alert-info">
-                    This friend hasn't played any games recently!
+                <div class="game-card__details">
+                    <div class="game-card__stat">
+                        <span>Total Playtime:</span>
+                        <span>{{totalPlaytime}} hrs</span>
+                    </div>
+                    <div class="game-card__stat">
+                        <span>Last 2 Weeks:</span>
+                        <span>{{twoWeeksPlaytime}} hrs</span>
+                    </div>
+                    <div class="game-card__last-played">
+                        Last Played:
+                        {{formatLastPlayed lastPlayed}}
+                    </div>
                 </div>
             </div>
         {{/each}}
     </div>
-</div>
+</section>

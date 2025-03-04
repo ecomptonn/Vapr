@@ -75,7 +75,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/shalissaAvatar.jpg",
             currentGame: "Marvel Rivals",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Apex Legends",
                     totalplaytime: 200,
@@ -113,7 +113,7 @@ const demoUser = {
             status: "Offline",
             avatar: "/images/novaAvatar.jpg",
             currentGame: null,
-            recentGames: [
+            steamGames: [
                 {
                     name: "Left 4 Dead 2",
                     playtime: 700,
@@ -146,7 +146,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/pixelAvatar.jpg",
             currentGame: "Counter-Strike 2",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Counter-Strike 2",
                     totalPlaytime: 3000,
@@ -184,7 +184,7 @@ const demoUser = {
             status: "Away",
             avatar: "/images/shadowAvatar.jpg",
             currentGame: "The Elder Scrolls V: Skyrim",
-            recentGames: [
+            steamGames: [
                 {
                     name: "The Elder Scrolls V: Skyrim",
                     totalPlaytime: 2500,
@@ -222,7 +222,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/cosmoAvatar.jpg",
             currentGame: "Stardew Valley",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Stardew Valley",
                     totalPlaytime: 1500,
@@ -260,7 +260,7 @@ const demoUser = {
             status: "Offline",
             avatar: "/images/wizardAvatar.jpg",
             currentGame: null,
-            recentGames: [
+            steamGames: [
                 {
                     name: "Cyberpunk 2077",
                     totalPlaytime: 1200,
@@ -298,7 +298,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/speedAvatar.jpg",
             currentGame: "Celeste",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Celeste",
                     totalPlaytime: 800,
@@ -336,7 +336,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/stratAvatar.jpg",
             currentGame: "Age of Empires IV",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Age of Empires IV",
                     totalPlaytime: 1500,
@@ -374,7 +374,7 @@ const demoUser = {
             status: "Away",
             avatar: "/images/loreAvatar.jpg",
             currentGame: "Divinity: Original Sin 2",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Divinity: Original Sin 2",
                     totalPlaytime: 1500,
@@ -412,7 +412,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/craftAvatar.jpg",
             currentGame: "Core Keeper",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Core Keeper",
                     totalPlaytime: 800,
@@ -450,7 +450,7 @@ const demoUser = {
             status: "Offline",
             avatar: "/images/retroAvatar.jpg",
             currentGame: null,
-            recentGames: [
+            steamGames: [
                 {
                     name: "Final Fantasy VI",
                     totalPlaytime: 1000,
@@ -488,7 +488,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/neonAvatar.jpg",
             currentGame: "Elden Ring",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Elden Ring",
                     totalPlaytime: 2500,
@@ -526,7 +526,7 @@ const demoUser = {
             status: "Away",
             avatar: "/images/shadowHunterAvatar.jpg",
             currentGame: null,
-            recentGames: [
+            steamGames: [
                 {
                     name: "Rainbow Six Siege",
                     totalPlaytime: 3200,
@@ -564,7 +564,7 @@ const demoUser = {
             status: "Offline",
             avatar: "/images/starAvatar.jpg",
             currentGame: null,
-            recentGames: [
+            steamGames: [
                 {
                     name: "No Man's Sky",
                     totalPlaytime: 1800,
@@ -602,7 +602,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/witchAvatar.jpg",
             currentGame: "Baldur's Gate 3",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Baldur's Gate 3",
                     totalPlaytime: 2100,
@@ -640,7 +640,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/rogueAvatar.jpg",
             currentGame: "Forza Horizon 5",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Forza Horizon 5",
                     totalPlaytime: 1700,
@@ -678,7 +678,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/techMageAvatar.jpg",
             currentGame: "Minecraft",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Minecraft",
                     totalPlaytime: 4500,
@@ -716,7 +716,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/foxAvatar.jpg",
             currentGame: "Dishonored 2",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Dishonored 2",
                     totalPlaytime: 950,
@@ -754,7 +754,7 @@ const demoUser = {
             status: "Away",
             avatar: "/images/beatAvatar.jpg",
             currentGame: null,
-            recentGames: [
+            steamGames: [
                 {
                     name: "Beat Saber",
                     totalPlaytime: 2000,
@@ -792,7 +792,7 @@ const demoUser = {
             status: "Online",
             avatar: "/images/tacticalAvatar.jpg",
             currentGame: "Total War: Warhammer III",
-            recentGames: [
+            steamGames: [
                 {
                     name: "Total War: Warhammer III",
                     totalPlaytime: 1900,
@@ -830,7 +830,7 @@ const demoUser = {
             status: "Offline",
             avatar: "/images/goblinAvatar.jpg",
             currentGame: null,
-            recentGames: [
+            steamGames: [
                 {
                     name: "Diablo IV",
                     totalPlaytime: 2800,
