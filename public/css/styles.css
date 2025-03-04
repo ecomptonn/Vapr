@@ -79,6 +79,19 @@ main {
   display: flex;
 }
 
+.wrapper {
+  height: 100%;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .carousel-container {
   position: relative;
   margin-bottom: 24px;
@@ -517,19 +530,4 @@ main {
   font-size: 1.4rem;
   color: #333;
   text-decoration: underline;
-}
-
-.friends {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 24px;
-  overflow-y: auto;
-}
-
-.friends-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
 }/*# sourceMappingURL=styles.css.map */

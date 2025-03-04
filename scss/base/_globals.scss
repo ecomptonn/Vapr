@@ -28,3 +28,16 @@ main {
 .flex-container {
     display: flex;
 }
+
+.wrapper {
+    height: 100%;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
