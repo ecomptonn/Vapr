@@ -309,7 +309,7 @@ const demoUser = {
                     name: "Portal 2",
                     totalPlaytime: 800,
                     twoWeeksPlaytime: 15,
-                    img: "",
+                    img: "/images/portal2Header.jpg",
                     lastPlayed: "2025-01-16T21:30:00Z",
                 },
                 {
