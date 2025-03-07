@@ -442,10 +442,10 @@ const demoUser = {
                     lastPlayed: "2025-01-17T20:15:00Z",
                 },
                 {
-                    name: "Path of Exile",
+                    name: "Path of Exile 2",
                     totalPlaytime: 3000,
                     twoWeeksPlaytime: 40,
-                    img: "",
+                    img: "/images/poe2Header.jpg",
                     lastPlayed: "2025-01-16T21:45:00Z",
                 },
                 {
