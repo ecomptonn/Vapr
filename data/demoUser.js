@@ -24,7 +24,7 @@ const demoUser = {
             totalPlaytime: 400,
             twoWeeksPlaytime: 15,
             img: "/images/poe2Header.jpg",
-            lastPlayed: "2025-01-10T07:55:07Z",
+            lastPlayed: "2025-02-10T07:55:07Z",
         },
         {
             name: "Warhammer 40,000: Dawn of War 3",
