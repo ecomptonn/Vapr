@@ -1,1 +1,18 @@
-<h1>Steam Friends Page</h1>
+<section class="wrapper">
+    <div class="container">
+        {{#each (sortFriendStatus user.friends)}}
+            {{! friend card render }}
+            <div class="friend-card">
+                <img src="{{avatar}}" alt="{{displayName}} avatar" />
+                <div class="friend-info">
+                    <h3 class="friend-name">{{displayName}}</h3>
+                    <p class="friend-status {{status}}">{{status}}</p>
+                    {{#if currentGame}}
+                        <p class="friend-game">Playing:
+                            {{currentGame}}</p>
+                    {{/if}}
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>
