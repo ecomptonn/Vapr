@@ -3,6 +3,13 @@ import { ensureAuth } from "../middleware/auth.js";
 import demoUser from "../data/demoUser.js";
 const router = express.Router();
 
+// Import steam service
+import {
+    fetchFriendList,
+    fetchGameDetails,
+    fetchSteamUserData,
+} from "../services/steamService.js";
+
 // @desc    Login Page
 // @route   GET /
 router.get("/", (req, res) => {
