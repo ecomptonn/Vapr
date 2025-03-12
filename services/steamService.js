@@ -4,14 +4,30 @@ async function fetchSteamUserData(steamId) {
     try {
         // Get player summary (displayName, avatar, etc.)
         const summaryResponse = await fetch(
-            `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${STEAM_API_KEY}&steamids=${steamId}`
+            `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${STEAM_API_KEY}&steamids=${steamId}`,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            }
         );
+
+        const rawText = await summaryResponse.text();
+        console.log("Raw API response:", rawText);
+
         const summaryData = await summaryResponse.json();
         const playerData = summaryData.response.players[0];
 
         // Get owned games
         const gamesResponse = await fetch(
-            `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${STEAM_API_KEY}&steamid=${steamId}&format=json&include_appinfo=true`
+            `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}`,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            }
         );
         const gamesData = await gamesResponse.json();
         const games = gamesData.response.games || [];
@@ -33,7 +49,13 @@ async function fetchSteamUserData(steamId) {
 async function fetchGameDetails(appId) {
     try {
         const response = await fetch(
-            `https://store.steampowered.com/api/appdetails?appids=${appId}`
+            `https://store.steampowered.com/api/appdetails?appids=${appId}`,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            }
         );
         const data = await response.json();
         return data[appId].data;
@@ -47,7 +69,13 @@ async function fetchGameDetails(appId) {
 async function fetchFriendList(steamId) {
     try {
         const response = await fetch(
-            `https://api.steampowered.com/ISteamUser/GetFriendList/v1/?key=${STEAM_API_KEY}&steamid=${steamId}&relationship=friend`
+            `http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}&relationship=friend`,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            }
         );
         const data = await response.json();
         return data.friendslist.friends;
@@ -61,7 +89,13 @@ async function fetchFriendList(steamId) {
 async function fetchRecentlyPlayedGames(steamId, count = 5) {
     try {
         const response = await fetch(
-            `https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${STEAM_API_KEY}&steamid=${steamId}&count=${count}`
+            `http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}`,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            }
         );
         const data = await response.json();
 
