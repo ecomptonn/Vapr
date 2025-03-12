@@ -53,6 +53,16 @@ const recentGames = (games) => {
         .slice(0, 8);
 };
 
+// OR Helper
+const or = function () {
+    for (let i = 0; i < arguments.length - 1; i++) {
+        if (arguments[i]) {
+            return arguments[i];
+        }
+    }
+    return arguments[arguments.length - 1]; // Return the last argument as the default
+};
+
 // Comparison Helpers
 const eq = (a, b) => {
     return a === b;
@@ -85,4 +95,5 @@ export {
     lt,
     gte,
     lte,
+    or,
 };

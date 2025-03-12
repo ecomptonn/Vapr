@@ -57,4 +57,35 @@ async function fetchFriendList(steamId) {
     }
 }
 
-export { fetchFriendList, fetchGameDetails, fetchSteamUserData };
+// fetch users recently played games
+async function fetchRecentlyPlayedGames(steamId, count = 5) {
+    try {
+        const response = await fetch(
+            `https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v1/?key=${STEAM_API_KEY}&steamid=${steamId}&count=${count}`
+        );
+        const data = await response.json();
+
+        if (!data.response || !data.response.games) {
+            return [];
+        }
+
+        return data.response.games.map((game) => ({
+            appId: game.appid,
+            name: game.name,
+            iconUrl: `https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`,
+            logoUrl: `https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`,
+            playtimeForever: game.playtime_forever, // in minutes
+            playtimeRecent: game.playtime_2weeks || 0, // in minutes
+        }));
+    } catch (error) {
+        console.error("Error fetching recently played games:", error);
+        throw error;
+    }
+}
+
+export {
+    fetchFriendList,
+    fetchGameDetails,
+    fetchSteamUserData,
+    fetchRecentlyPlayedGames,
+};

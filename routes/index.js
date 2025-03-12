@@ -8,6 +8,7 @@ import {
     fetchFriendList,
     fetchGameDetails,
     fetchSteamUserData,
+    fetchRecentlyPlayedGames,
 } from "../services/steamService.js";
 
 // @desc    Login Page
@@ -23,6 +24,31 @@ router.get("/", (req, res) => {
 router.get("/dashboard", ensureAuth, async (req, res) => {
     try {
         const user = req.user || req.session.user;
+
+        // Fetch user's steam data if not already in session or needs update
+        if (!user.steamData || isDataStale(user.steamData.lastUpdated)) {
+            try {
+                // Get user's Steam data
+                const steamData = await fetchSteamUserData(user.steamId);
+
+                // Get user's friends with their profiles
+                steamData.friends = await fetchFriendList(user.steamId);
+
+                // Get user's recently played games
+                steamData.recentGames = await fetchRecentlyPlayedGames(
+                    user.steamId
+                );
+
+                // Save to session
+                user.steamData = steamData;
+
+                // If using database persistence, update user record
+                // await User.findByIdAndUpdate(user._id, { steamData });
+            } catch (steamError) {
+                console.error("Error fetching Steam data:", steamError);
+                // Continue with whatever data we have
+            }
+        }
 
         res.render("pages/dashboard/home", { user });
     } catch (error) {

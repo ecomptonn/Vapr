@@ -16,6 +16,7 @@ import {
     lt,
     gte,
     lte,
+    or,
     recentGames,
 } from "./helpers/hbs.js";
 
@@ -49,6 +50,7 @@ app.engine(
             lt,
             gte,
             lte,
+            or,
         },
         extname: ".hbs",
         defaultLayout: "main",

@@ -4,7 +4,7 @@
         <div class="profile-container">
             <div class="profile-info">
                 <img
-                    src="{{user.avatar}}"
+                    src="{{or user.avatar user.avatarUrl}}"
                     alt="{{user.displayName}} avatar"
                     class="profile-image"
                 />
