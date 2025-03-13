@@ -1,33 +1,17 @@
-const STEAM_API_KEY = process.env.STEAM_API_KEY;
+import { STEAM_API_KEY } from "../config/config.js";
 
 async function fetchSteamUserData(steamId) {
     try {
         // Get player summary (displayName, avatar, etc.)
         const summaryResponse = await fetch(
-            `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${STEAM_API_KEY}&steamids=${steamId}`,
-            {
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-            }
+            `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${STEAM_API_KEY}&steamids=${steamId}`
         );
-
-        const rawText = await summaryResponse.text();
-        console.log("Raw API response:", rawText);
-
         const summaryData = await summaryResponse.json();
         const playerData = summaryData.response.players[0];
 
         // Get owned games
         const gamesResponse = await fetch(
-            `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}`,
-            {
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-            }
+            `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}`
         );
         const gamesData = await gamesResponse.json();
         const games = gamesData.response.games || [];

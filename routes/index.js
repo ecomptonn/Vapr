@@ -26,7 +26,7 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
         const user = req.user || req.session.user;
 
         // Fetch user's steam data if not already in session or needs update
-        if (!user.steamData || isDataStale(user.steamData.lastUpdated)) {
+        if (!user.steamData) {
             try {
                 // Get user's Steam data
                 const steamData = await fetchSteamUserData(user.steamId);
@@ -41,9 +41,6 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
 
                 // Save to session
                 user.steamData = steamData;
-
-                // If using database persistence, update user record
-                // await User.findByIdAndUpdate(user._id, { steamData });
             } catch (steamError) {
                 console.error("Error fetching Steam data:", steamError);
                 // Continue with whatever data we have
@@ -53,7 +50,7 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
         res.render("pages/dashboard/home", { user });
     } catch (error) {
         console.error(error);
-        res.render("error/500");
+        res.render("errors/500");
     }
 });
 
