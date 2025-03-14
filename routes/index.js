@@ -7,7 +7,7 @@ const router = express.Router();
 import {
     fetchFriendList,
     fetchGameDetails,
-    fetchSteamUserData,
+    fetchOwnedGames,
     fetchRecentlyPlayedGames,
 } from "../services/steamService.js";
 
@@ -26,10 +26,12 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
         const user = req.user || req.session.user;
 
         // Fetch user's steam data if not already in session or needs update
-        if (!user.steamData) {
+        if (!user.gameData) {
             try {
                 // Get user's Steam data
-                const steamData = await fetchSteamUserData(user.steamId);
+                const gameData = await fetchOwnedGames(user.steamId);
+
+                const steamData = {};
 
                 // Get user's friends with their profiles
                 steamData.friends = await fetchFriendList(user.steamId);
@@ -40,10 +42,10 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                 );
 
                 // Save to session
+                user.gameData = gameData;
                 user.steamData = steamData;
-            } catch (steamError) {
-                console.error("Error fetching Steam data:", steamError);
-                // Continue with whatever data we have
+            } catch (error) {
+                console.error("Error fetching Steam data:", error);
             }
         }
 
