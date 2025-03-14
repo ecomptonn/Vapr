@@ -29,8 +29,6 @@ async function fetchGameDetails(appId) {
         );
         const data = await response.json();
 
-        console.log("Fetched Data", data);
-
         return data[appId].data;
     } catch (error) {
         console.error(`Error fetching game details for ${appId}:`, error);
@@ -53,7 +51,7 @@ async function fetchFriendList(steamId) {
 }
 
 // fetch users recently played games
-async function fetchRecentlyPlayedGames(steamId, count = 5) {
+async function fetchRecentlyPlayedGames(steamId) {
     try {
         const response = await fetch(
             `http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}`
