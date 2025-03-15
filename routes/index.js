@@ -193,10 +193,4 @@ router.get("/privacy", (req, res) => {
     });
 });
 
-// @desc debug user
-// @route GET /debug
-router.get("/debug/user", (req, res) => {
-    res.json(req.user || req.session.user);
-});
-
 export default router;
