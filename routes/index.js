@@ -1,6 +1,7 @@
 import express from "express";
 import { ensureAuth } from "../middleware/auth.js";
 import demoUser from "../data/demoUser.js";
+import User from "../models/User.js";
 const router = express.Router();
 
 // Import steam service
@@ -8,7 +9,6 @@ import {
     fetchFriendList,
     fetchGameDetails,
     fetchOwnedGames,
-    fetchRecentlyPlayedGames,
 } from "../services/steamService.js";
 
 // @desc    Login Page
@@ -23,35 +23,102 @@ router.get("/", (req, res) => {
 // @route   GET /dashboard
 router.get("/dashboard", ensureAuth, async (req, res) => {
     try {
-        const user = req.user || req.session.user;
+        const user = req.user;
+        const steamId = user.steamId;
 
-        // Fetch user's steam data if not already in session or needs update
-        if (!user.gameData) {
+        // Get the full user document from MongoDB
+        const userDoc = await User.findById(user._id);
+
+        // Check if we need to update Steam data (older than 24 hours)
+        const needsUpdate =
+            !userDoc.steamCache?.gameData ||
+            !userDoc.steamCache?.timestamp ||
+            Date.now() - new Date(userDoc.steamCache.timestamp).getTime() >
+                24 * 60 * 60 * 1000;
+
+        if (needsUpdate) {
             try {
-                // Get user's Steam data
-                const gameData = await fetchOwnedGames(user.steamId);
+                // Fetch Steam data
+                const gameData = await fetchOwnedGames(steamId);
 
-                const steamData = {};
+                if (gameData && gameData.response && gameData.response.games) {
+                    // Format games with additional useful data
+                    const formattedGames = gameData.response.games.map(
+                        (game) => ({
+                            ...game,
+                            playtime_forever_hours: (
+                                game.playtime_forever / 60
+                            ).toFixed(1),
+                            playtime_2weeks_hours: game.playtime_2weeks
+                                ? (game.playtime_2weeks / 60).toFixed(1)
+                                : 0,
+                            header_image: `https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/header.jpg`,
+                            last_played_date: game.rtime_last_played
+                                ? new Date(
+                                      game.rtime_last_played * 1000
+                                  ).toLocaleDateString()
+                                : "Never",
+                        })
+                    );
 
-                // Get user's friends with their profiles
-                steamData.friends = await fetchFriendList(user.steamId);
+                    // Sort by last played time (most recent first)
+                    formattedGames.sort((a, b) => {
+                        const timeA = a.rtime_last_played || 0;
+                        const timeB = b.rtime_last_played || 0;
+                        return timeB - timeA;
+                    });
 
-                // Get user's recently played games
-                steamData.recentGames = await fetchRecentlyPlayedGames(
-                    user.steamId
-                );
+                    // Update games in response
+                    gameData.response.games = formattedGames;
 
-                // Save to session
-                user.gameData = gameData;
-                user.steamData = steamData;
+                    // Get recent games (up to 6)
+                    const recentGames = formattedGames
+                        .filter((game) => game.rtime_last_played)
+                        .slice(0, 6);
+
+                    // Fetch friends list
+                    const friends = await fetchFriendList(steamId);
+
+                    // Update the user document
+                    userDoc.steamCache = {
+                        gameData: gameData,
+                        steamData: {
+                            friends: friends,
+                            recentGames: {
+                                response: {
+                                    games: recentGames,
+                                },
+                            },
+                        },
+                        timestamp: new Date(),
+                    };
+
+                    // Save the updated document
+                    await userDoc.save();
+                }
             } catch (error) {
-                console.error("Error fetching Steam data:", error);
+                console.error("Error fetching/processing Steam data:", error);
             }
         }
 
-        res.render("pages/dashboard/home", { user });
+        // Convert Mongoose document to plain JavaScript object to avoid Handlebars warnings
+        const userObj = userDoc.toObject();
+
+        console.log(
+            "Session size:",
+            JSON.stringify(req.session).length / 1024,
+            "KB"
+        );
+        console.log("Session keys:", Object.keys(req.session));
+
+        // Render the dashboard with user data
+        res.render("pages/dashboard/home", {
+            user: userObj,
+            gameData: userObj.steamCache?.gameData,
+            steamData: userObj.steamCache?.steamData,
+        });
     } catch (error) {
-        console.error(error);
+        console.error("Dashboard route error:", error);
         res.render("errors/500");
     }
 });
@@ -131,6 +198,12 @@ router.get("/privacy", (req, res) => {
     res.render("pages/privacy", {
         layout: "policy",
     });
+});
+
+// @desc debug user
+// @route GET /debug
+router.get("/debug/user", (req, res) => {
+    res.json(req.user || req.session.user);
 });
 
 export default router;

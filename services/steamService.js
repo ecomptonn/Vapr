@@ -2,22 +2,48 @@ import { STEAM_API_KEY } from "../config/config.js";
 
 async function fetchOwnedGames(steamId) {
     try {
-        // Get owned games
-        const gamesResponse = await fetch(
-            `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}`
+        const response = await fetch(
+            `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${STEAM_API_KEY}&steamid=${steamId}&format=json&include_appinfo=true`,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            }
         );
 
-        const gamesData = await gamesResponse.json();
-        const games = gamesData.response.games || [];
+        // Check if the response is OK
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`Steam API error (${response.status}): ${errorText}`);
+            return null;
+        }
 
-        return {
-            steamId,
-            games,
-            lastUpdated: new Date(),
-        };
+        const data = await response.json();
+
+        // Log the structure of the returned data
+        console.log(
+            "Steam API response structure:",
+            JSON.stringify({
+                has_response: !!data.response,
+                has_games: !!(data.response && data.response.games),
+                game_count:
+                    data.response && data.response.games
+                        ? data.response.games.length
+                        : 0,
+            })
+        );
+
+        // If games array is missing but response exists, create an empty array
+        if (data.response && !data.response.games) {
+            data.response.games = [];
+        }
+
+        return data;
     } catch (error) {
-        console.error("Error fetching Steam data:", error);
-        throw error;
+        console.error("Error in fetchOwnedGames:", error);
+        // Return a properly structured object even on error
+        return { response: { games: [] } };
     }
 }
 

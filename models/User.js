@@ -13,6 +13,14 @@ const UserSchema = new mongoose.Schema(
             required: true,
         },
         avatarUrl: String,
+        steamCache: {
+            gameData: mongoose.Schema.Types.Mixed,
+            steamData: mongoose.Schema.Types.Mixed,
+            timestamp: {
+                type: Date,
+                default: Date.now,
+            },
+        },
     },
     {
         timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
