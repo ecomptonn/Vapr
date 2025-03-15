@@ -4,11 +4,19 @@ import User from "../models/User.js";
 export default function configurePassport(passport) {
     // Serialize and deserialize user
     passport.serializeUser((user, done) => {
-        done(null, user);
+        // Only store the user ID in the session
+        done(null, user._id);
     });
 
-    passport.deserializeUser((obj, done) => {
-        done(null, obj);
+    passport.deserializeUser(async (id, done) => {
+        try {
+            // Fetch the user from the database when needed
+            const user = await User.findById(id);
+            done(null, user);
+        } catch (error) {
+            console.error("Error in deserializeUser:", error);
+            done(error);
+        }
     });
 
     // Use Steam Strategy
