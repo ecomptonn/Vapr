@@ -104,13 +104,6 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
         // Convert Mongoose document to plain JavaScript object to avoid Handlebars warnings
         const userObj = userDoc.toObject();
 
-        console.log(
-            "Session size:",
-            JSON.stringify(req.session).length / 1024,
-            "KB"
-        );
-        console.log("Session keys:", Object.keys(req.session));
-
         // Render the dashboard with user data
         res.render("pages/dashboard/home", {
             user: userObj,
