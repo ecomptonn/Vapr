@@ -12,6 +12,7 @@ router.get(
     "/steam/return",
     passport.authenticate("steam", { failureRedirect: "/" }),
     (req, res) => {
+        req.session.freshLogin = true;
         res.redirect("/dashboard");
     }
 );

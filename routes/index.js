@@ -7,8 +7,8 @@ const router = express.Router();
 // Import steam service
 import {
     fetchFriendList,
-    fetchGameDetails,
     fetchOwnedGames,
+    fetchPlayerSummaries,
 } from "../services/steamService.js";
 
 // @desc    Login Page
@@ -29,82 +29,166 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
         // Get the full user document from MongoDB
         const userDoc = await User.findById(user._id);
 
-        // Check if we need to update Steam data (older than 24 hours)
-        const needsUpdate =
+        // Check if game data needs update (once per 24 hours)
+        const gameDataNeedsUpdate =
             !userDoc.steamCache?.gameData ||
             !userDoc.steamCache?.timestamp ||
             Date.now() - new Date(userDoc.steamCache.timestamp).getTime() >
                 24 * 60 * 60 * 1000;
 
-        if (needsUpdate) {
-            try {
-                // Fetch Steam data
-                const gameData = await fetchOwnedGames(steamId);
+        // Always update friends on login, but only update games data if needed
+        const freshLogin = req.session.freshLogin || false;
 
-                if (gameData && gameData.response && gameData.response.games) {
-                    // Format games with additional useful data
-                    const formattedGames = gameData.response.games.map(
-                        (game) => ({
-                            ...game,
-                            playtime_forever_hours: (
-                                game.playtime_forever / 60
-                            ).toFixed(1),
-                            playtime_2weeks_hours: game.playtime_2weeks
-                                ? (game.playtime_2weeks / 60).toFixed(1)
-                                : 0,
-                            header_image: `https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/header.jpg`,
-                            last_played_date: game.rtime_last_played
-                                ? new Date(
-                                      game.rtime_last_played * 1000
-                                  ).toLocaleDateString()
-                                : "Never",
-                        })
+        if (gameDataNeedsUpdate || freshLogin) {
+            try {
+                let gameData = userDoc.steamCache?.gameData;
+                let recentGames =
+                    userDoc.steamCache?.steamData?.recentGames?.response
+                        ?.games || [];
+
+                if (gameDataNeedsUpdate) {
+                    // Fetch and process game data
+                    gameData = await fetchOwnedGames(steamId);
+
+                    if (
+                        gameData &&
+                        gameData.response &&
+                        gameData.response.games
+                    ) {
+                        const formattedGames = gameData.response.games.map(
+                            (game) => ({
+                                ...game,
+                                playtime_forever_hours: (
+                                    game.playtime_forever / 60
+                                ).toFixed(1),
+                                playtime_2weeks_hours: game.playtime_2weeks
+                                    ? (game.playtime_2weeks / 60).toFixed(1)
+                                    : 0,
+                                header_image: `https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/header.jpg`,
+                                last_played_date: game.rtime_last_played
+                                    ? new Date(
+                                          game.rtime_last_played * 1000
+                                      ).toLocaleDateString()
+                                    : "Never",
+                            })
+                        );
+
+                        formattedGames.sort((a, b) => {
+                            return (
+                                (b.rtime_last_played || 0) -
+                                (a.rtime_last_played || 0)
+                            );
+                        });
+
+                        gameData.response.games = formattedGames;
+
+                        recentGames = formattedGames
+                            .filter((game) => game.rtime_last_played)
+                            .slice(0, 8); // show only 8 games (for dashboard home)
+                    }
+                }
+
+                // Always fetch fresh friends data on login
+                if (freshLogin) {
+                    console.log(
+                        "Fresh login detected - updating friends status"
                     );
 
-                    // Sort by last played time (most recent first)
-                    formattedGames.sort((a, b) => {
-                        const timeA = a.rtime_last_played || 0;
-                        const timeB = b.rtime_last_played || 0;
-                        return timeB - timeA;
-                    });
+                    // Fetch friends with detailed profiles
+                    const friendsData = await fetchFriendList(steamId);
 
-                    // Update games in response
-                    gameData.response.games = formattedGames;
+                    // Process friend data
+                    let processedFriends = { friendslist: { friends: [] } };
+                    if (
+                        friendsData &&
+                        friendsData.friendslist &&
+                        friendsData.friendslist.friends
+                    ) {
+                        const friendIds = friendsData.friendslist.friends
+                            .map((friend) => friend.steamid)
+                            .join(",");
+                        const friendProfiles = await fetchPlayerSummaries(
+                            friendIds
+                        );
 
-                    // Get recent games (up to 6)
-                    const recentGames = formattedGames
-                        .filter((game) => game.rtime_last_played)
-                        .slice(0, 6);
+                        if (
+                            friendProfiles &&
+                            friendProfiles.response &&
+                            friendProfiles.response.players
+                        ) {
+                            // Process all friends
+                            const allFriends =
+                                friendProfiles.response.players.map(
+                                    (player) => {
+                                        // Convert personastate to a status string
+                                        let statusText = "Offline";
+                                        switch (player.personastate) {
+                                            case 1:
+                                                statusText = "Online";
+                                                break;
+                                            case 2:
+                                                statusText = "Away";
+                                                break;
+                                        }
 
-                    // Fetch friends list
-                    const friends = await fetchFriendList(steamId);
+                                        return {
+                                            ...player,
+                                            statusText: statusText,
+                                        };
+                                    }
+                                );
 
-                    // Update the user document
-                    userDoc.steamCache = {
-                        gameData: gameData,
-                        steamData: {
-                            friends: friends,
-                            recentGames: {
-                                response: {
-                                    games: recentGames,
+                            // Filter for online friends and sort alphabetically
+                            const onlineFriends = allFriends
+                                .filter((friend) => friend.personastate === 1)
+                                .sort((a, b) =>
+                                    a.personaname.localeCompare(b.personaname)
+                                );
+
+                            processedFriends = {
+                                friendslist: {
+                                    friends: allFriends,
+                                    onlineFriends: onlineFriends, // online friends, abc order
                                 },
-                            },
-                        },
-                        timestamp: new Date(),
-                    };
+                                lastUpdated: new Date(),
+                            };
+                        }
+                    }
 
-                    // Save the updated document
-                    await userDoc.save();
+                    // Update only the friends data in the user document
+                    userDoc.steamCache.steamData = {
+                        ...userDoc.steamCache.steamData,
+                        friends: processedFriends,
+                    };
+                }
+
+                // If game data was updated, update that too
+                if (gameDataNeedsUpdate) {
+                    userDoc.steamCache.gameData = gameData;
+                    userDoc.steamCache.steamData.recentGames = {
+                        response: {
+                            games: recentGames,
+                        },
+                    };
+                    userDoc.steamCache.timestamp = new Date();
+                }
+
+                // Save the updated document
+                await userDoc.save();
+
+                // Clear the fresh login flag
+                if (req.session) {
+                    req.session.freshLogin = false;
                 }
             } catch (error) {
                 console.error("Error fetching/processing Steam data:", error);
             }
         }
 
-        // Convert Mongoose document to plain JavaScript object to avoid Handlebars warnings
+        // Convert Mongoose document to plain js object
         const userObj = userDoc.toObject();
 
-        // Render the dashboard with user data
+        // Render with the data from the database
         res.render("pages/dashboard/home", {
             user: userObj,
             gameData: userObj.steamCache?.gameData,

@@ -1,11 +1,11 @@
 <section class="main-wrapper">
     {{! game card render  }}
     <div class="game-card-container">
-        {{#each (recentGames user.steamGames)}}
+        {{#each steamData.recentGames.response.games}}
             <div class="game-card">
                 <div class="game-card__image-container">
                     <img
-                        src="{{img}}"
+                        src="{{header_image}}"
                         alt="{{name}}"
                         class="game-card__image"
                     />
@@ -16,15 +16,15 @@
                 <div class="game-card__details">
                     <div class="game-card__stat">
                         <span>Total Playtime:</span>
-                        <span>{{totalPlaytime}} hrs</span>
+                        <span>{{playtime_forever_hours}} hrs</span>
                     </div>
                     <div class="game-card__stat">
                         <span>Last 2 Weeks:</span>
-                        <span>{{twoWeeksPlaytime}} hrs</span>
+                        <span>{{playtime_2weeks_hours}} hrs</span>
                     </div>
                     <div class="game-card__last-played">
                         Last Played:
-                        {{formatLastPlayed lastPlayed}}
+                        {{last_played_date}}
                     </div>
                 </div>
             </div>
@@ -48,22 +48,30 @@
                 /></svg>
         </button>
         <div class="carousel-container__content" id="friends-carousel">
-            {{#each user.friends}}
-                {{#if (eq status "Online")}}
-                    {{! friend card render }}
+            {{#if steamData.friends.friendslist.onlineFriends.length}}
+                {{#each steamData.friends.friendslist.onlineFriends}}
                     <div class="friend-card">
-                        <img src="{{avatar}}" alt="{{displayName}} avatar" />
+                        <img
+                            src="{{avatarfull}}"
+                            alt="{{personaname}} avatar"
+                        />
                         <div class="friend-info">
-                            <h3 class="friend-name">{{displayName}}</h3>
-                            <p class="friend-status {{status}}">{{status}}</p>
-                            {{#if currentGame}}
+                            <h3 class="friend-name">{{personaname}}</h3>
+                            <p
+                                class="friend-status {{statusText}}"
+                            >{{statusText}}</p>
+                            {{#if gameextrainfo}}
                                 <p class="friend-game">Playing:
-                                    {{currentGame}}</p>
+                                    {{gameextrainfo}}</p>
                             {{/if}}
                         </div>
                     </div>
-                {{/if}}
-            {{/each}}
+                {{/each}}
+            {{else}}
+                <div class="empty-friends-message">
+                    <p>No friends are currently online.</p>
+                </div>
+            {{/if}}
         </div>
         <button
             class="carousel-container__nav-button carousel-container__nav-button--next"
