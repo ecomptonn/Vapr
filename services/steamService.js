@@ -47,18 +47,28 @@ async function fetchOwnedGames(steamId) {
     }
 }
 
-// Get details for a specific game by appId
-async function fetchGameDetails(appId) {
+async function fetchPlayerSummaries(steamIds) {
     try {
         const response = await fetch(
-            `https://store.steampowered.com/api/appdetails?appids=${appId}`
+            `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${STEAM_API_KEY}&steamids=${steamIds}`,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            }
         );
-        const data = await response.json();
 
-        return data[appId].data;
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`Steam API error (${response.status}): ${errorText}`);
+            return null;
+        }
+
+        return await response.json();
     } catch (error) {
-        console.error(`Error fetching game details for ${appId}:`, error);
-        throw error;
+        console.error("Error in fetchPlayerSummaries:", error);
+        return null;
     }
 }
 
@@ -66,45 +76,29 @@ async function fetchGameDetails(appId) {
 async function fetchFriendList(steamId) {
     try {
         const response = await fetch(
-            `http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}&relationship=friend`
+            `http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}&relationship=friend`,
+            {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            }
         );
-        const data = await response.json();
-        return data.friendslist.friends;
-    } catch (error) {
-        console.error("Error fetching friend list:", error);
-        throw error;
-    }
-}
 
-// fetch users recently played games
-async function fetchRecentlyPlayedGames(steamId) {
-    try {
-        const response = await fetch(
-            `http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${STEAM_API_KEY}&steamid=${steamId}`
-        );
-        const data = await response.json();
-
-        if (!data.response || !data.response.games) {
-            return [];
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(
+                `Friend list API error (${response.status}): ${errorText}`
+            );
+            return { friendslist: { friends: [] } };
         }
 
-        return data.response.games.map((game) => ({
-            appId: game.appid,
-            name: game.name,
-            iconUrl: `https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`,
-            logoUrl: `https://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_logo_url}.jpg`,
-            playtimeForever: game.playtime_forever, // in minutes
-            playtimeRecent: game.playtime_2weeks || 0, // in minutes
-        }));
+        const data = await response.json();
+        return data;
     } catch (error) {
-        console.error("Error fetching recently played games:", error);
-        throw error;
+        console.error("Error in fetchFriendList:", error);
+        return { friendslist: { friends: [] } };
     }
 }
 
-export {
-    fetchFriendList,
-    fetchGameDetails,
-    fetchOwnedGames,
-    fetchRecentlyPlayedGames,
-};
+export { fetchFriendList, fetchOwnedGames, fetchPlayerSummaries };
