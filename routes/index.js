@@ -224,7 +224,7 @@ router.get("/demo/friends", (req, res) => {
 
 // @desc    Demo Friend Detail Page
 // @route   GET /demo/friends/:friendName
-router.get("/demo/friend/:friendName", (req, res) => {
+router.get("/demo/friends/:friendName", (req, res) => {
     if (!req.session.user) {
         req.session.user = demoUser;
     }
@@ -250,6 +250,16 @@ router.get("/demo/friend/:friendName", (req, res) => {
 // @route   GET /friends
 router.get("/friends", ensureAuth, (req, res) => {
     res.render("pages/dashboard/friends");
+});
+
+// @desc    Demo Friend Detail Page
+// @route   GET /demo/friends/:friendName
+router.get("/friends/:friendName", (req, res) => {
+    res.render("pages/dashboard/friend-detail", {
+        user,
+        friend,
+        title: `${friend.displayName}'s Game Stats`,
+    });
 });
 
 // @desc    Demo Stats

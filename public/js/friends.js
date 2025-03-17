@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (friendName) {
                 // Route based on user type
                 if (isDemoUser) {
-                    window.location.href = `/demo/friend/${encodeURIComponent(
+                    window.location.href = `/demo/friends/${encodeURIComponent(
                         friendName
                     )}`;
                 } else {
-                    window.location.href = `/friend/${encodeURIComponent(
+                    window.location.href = `/friends/${encodeURIComponent(
                         friendName
                     )}`;
                 }
