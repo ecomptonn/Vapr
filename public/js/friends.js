@@ -8,13 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
         friend.addEventListener("click", () => {
             const steamId = friend.dataset.steamid;
 
-            if (steamId) {
-                // Route based on user type
-                if (isDemoUser) {
-                    window.location.href = `/demo/friends/${steamId}`;
-                } else {
-                    window.location.href = `/friends/${steamId}`;
-                }
+            if (isDemoUser) {
+                window.location.href = `/demo/friends/${friendName}`;
+            } else if (steamId) {
+                window.location.href = `/friends/${steamId}`;
             } else {
                 console.error("Could not find friend Steam ID!");
             }
