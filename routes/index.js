@@ -118,7 +118,7 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                                     (player) => {
                                         // Convert personastate to a status string
                                         let statusText = "Offline";
-                                        let statusPriority = 2; // Default priority for Offline
+                                        let statusPriority = 2; // Lowest priority
 
                                         switch (player.personastate) {
                                             case 1:

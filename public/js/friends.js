@@ -7,13 +7,22 @@ document.addEventListener("DOMContentLoaded", () => {
     friendElements.forEach((friend) => {
         friend.addEventListener("click", () => {
             const steamId = friend.dataset.steamid;
+            const friendName = friend.dataset.friendName;
 
             if (isDemoUser) {
-                window.location.href = `/demo/friends/${friendName}`;
-            } else if (steamId) {
-                window.location.href = `/friends/${steamId}`;
+                if (friendName) {
+                    window.location.href = `/demo/friends/${encodeURIComponent(
+                        friendName
+                    )}`;
+                } else {
+                    console.error("Demo user: Missing friendName!");
+                }
             } else {
-                console.error("Could not find friend Steam ID!");
+                if (steamId) {
+                    window.location.href = `/friends/${steamId}`;
+                } else {
+                    console.error("Could not find steamId!");
+                }
             }
         });
     });
