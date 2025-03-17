@@ -14,6 +14,11 @@ const formatDate = (date) => {
 };
 
 const formatLastPlayed = (date) => {
+    // Check for null, undefined, 0, or very old timestamps
+    if (!date || date <= 1000000000) {
+        // timestamps before Sept 2001 are likely invalid
+        return "Never";
+    }
     return dayjs(date).fromNow();
 };
 
