@@ -1,17 +1,20 @@
 <section class="wrapper">
     <div class="container">
-        {{#each user.friends}}
-            {{! friend card render }}
-            <div class="friend-card">
-                <img src="{{avatar}}" alt="{{displayName}} avatar" />
+        {{#each steamData.friends.friendslist.friends}}
+            <div class="friend-card {{#if isOnline}}online{{else}}offline{{/if}}">
+                <img src="{{avatarfull}}" alt="{{personaname}} avatar" />
                 <div class="friend-info">
-                    <h3 class="friend-name">{{displayName}}</h3>
-                    <p class="friend-status {{status}}">{{status}}</p>
-                    {{#if currentGame}}
+                    <h3 class="friend-name">{{personaname}}</h3>
+                    <p class="friend-status {{statusText}}">{{statusText}}</p>
+                    {{#if gameextrainfo}}
                         <p class="friend-game">Playing:
-                            {{currentGame}}</p>
+                            {{gameextrainfo}}</p>
                     {{/if}}
                 </div>
+            </div>
+        {{else}}
+            <div class="no-friends-message">
+                <p>No friends found.</p>
             </div>
         {{/each}}
     </div>

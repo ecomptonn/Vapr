@@ -122,35 +122,68 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                                     (player) => {
                                         // Convert personastate to a status string
                                         let statusText = "Offline";
+                                        let statusPriority = 2; // Default priority for Offline
+
                                         switch (player.personastate) {
                                             case 1:
                                                 statusText = "Online";
+                                                statusPriority = 0; // Highest priority
                                                 break;
                                             case 2:
+                                            case 3:
                                                 statusText = "Away";
+                                                statusPriority = 1; // Middle priority
                                                 break;
                                         }
 
                                         return {
                                             ...player,
                                             statusText: statusText,
+                                            statusPriority: statusPriority,
+                                            isOnline: player.personastate === 1,
                                         };
                                     }
                                 );
 
-                            // Filter for online friends and sort alphabetically
-                            const onlineFriends = allFriends
-                                .filter((friend) => friend.personastate === 1)
-                                .sort((a, b) =>
-                                    a.personaname.localeCompare(b.personaname)
+                            // Sort friends: online first, then away, then offline (each in alphabetical order)
+                            const sortedFriends = allFriends.sort((a, b) => {
+                                // First compare status priority
+                                if (a.statusPriority !== b.statusPriority) {
+                                    return a.statusPriority - b.statusPriority;
+                                }
+                                // Then sort alphabetically by name
+                                return a.personaname.localeCompare(
+                                    b.personaname
                                 );
+                            });
+
+                            const activeFriends = allFriends
+                                .filter((friend) => friend.statusPriority < 2) // Status 0 or 1 (Online or Away)
+                                .sort((a, b) => {
+                                    // First by status (Online before Away)
+                                    if (a.statusPriority !== b.statusPriority) {
+                                        return (
+                                            a.statusPriority - b.statusPriority
+                                        );
+                                    }
+                                    // Then alphabetically
+                                    return a.personaname.localeCompare(
+                                        b.personaname
+                                    );
+                                });
 
                             processedFriends = {
                                 friendslist: {
-                                    friends: allFriends,
-                                    onlineFriends: onlineFriends, // online friends, abc order
+                                    friends: sortedFriends,
+                                    onlineFriends: allFriends
+                                        .filter((friend) => friend.isOnline)
+                                        .sort((a, b) =>
+                                            a.personaname.localeCompare(
+                                                b.personaname
+                                            )
+                                        ),
+                                    activeFriends: activeFriends,
                                 },
-                                lastUpdated: new Date(),
                             };
                         }
                     }
@@ -162,7 +195,7 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                     };
                 }
 
-                // If game data was updated, update that too
+                // Check if game data needs to update
                 if (gameDataNeedsUpdate) {
                     userDoc.steamCache.gameData = gameData;
                     userDoc.steamCache.steamData.recentGames = {
@@ -248,8 +281,25 @@ router.get("/demo/friends/:friendName", (req, res) => {
 
 // @desc    Friends
 // @route   GET /friends
-router.get("/friends", ensureAuth, (req, res) => {
-    res.render("pages/dashboard/friends");
+router.get("/friends", ensureAuth, async (req, res) => {
+    try {
+        const user = req.user;
+
+        // Get the full user document from MongoDB with cached Steam data
+        const userDoc = await User.findById(user._id);
+
+        // Convert Mongoose document to plain JavaScript object
+        const userObj = userDoc.toObject();
+
+        res.render("pages/dashboard/friends", {
+            user: userObj,
+            gameData: userObj.steamCache?.gameData,
+            steamData: userObj.steamCache?.steamData,
+        });
+    } catch (error) {
+        console.error("Friends route error:", error);
+        res.render("errors/500");
+    }
 });
 
 // @desc    Demo Friend Detail Page
