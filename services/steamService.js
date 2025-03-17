@@ -21,19 +21,6 @@ async function fetchOwnedGames(steamId) {
 
         const data = await response.json();
 
-        // Log the structure of the returned data
-        console.log(
-            "Steam API response structure:",
-            JSON.stringify({
-                has_response: !!data.response,
-                has_games: !!(data.response && data.response.games),
-                game_count:
-                    data.response && data.response.games
-                        ? data.response.games.length
-                        : 0,
-            })
-        );
-
         // If games array is missing but response exists, create an empty array
         if (data.response && !data.response.games) {
             data.response.games = [];

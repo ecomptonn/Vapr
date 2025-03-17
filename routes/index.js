@@ -305,8 +305,6 @@ router.get("/friends/:steamId", ensureAuth, async (req, res) => {
         const user = req.user;
         const steamId = req.params.steamId;
 
-        console.log("Friend identifier:", steamId);
-
         // Get the full user document from MongoDB
         const userDoc = await User.findById(user._id);
 
