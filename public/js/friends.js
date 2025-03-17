@@ -6,24 +6,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     friendElements.forEach((friend) => {
         friend.addEventListener("click", () => {
-            const friendNameElement = friend.querySelector(".friend-name");
-            const friendName = friendNameElement
-                ? friendNameElement.textContent.trim()
-                : null;
+            const steamId = friend.dataset.steamid;
 
-            if (friendName) {
+            if (steamId) {
                 // Route based on user type
                 if (isDemoUser) {
-                    window.location.href = `/demo/friends/${encodeURIComponent(
-                        friendName
-                    )}`;
+                    window.location.href = `/demo/friends/${steamId}`;
                 } else {
-                    window.location.href = `/friends/${encodeURIComponent(
-                        friendName
-                    )}`;
+                    window.location.href = `/friends/${steamId}`;
                 }
             } else {
-                console.error("Could not find friend name!");
+                console.error("Could not find friend Steam ID!");
             }
         });
     });

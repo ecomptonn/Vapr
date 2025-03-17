@@ -50,7 +50,7 @@
         <div class="carousel-container__content" id="friends-carousel">
             {{#if steamData.friends.friendslist.onlineFriends.length}}
                 {{#each steamData.friends.friendslist.onlineFriends}}
-                    <div class="friend-card">
+                    <div class="friend-card" data-steamid="{{steamid}}">
                         <img
                             src="{{avatarfull}}"
                             alt="{{personaname}} avatar"

@@ -90,10 +90,6 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
 
                 // Always fetch fresh friends data on login
                 if (freshLogin) {
-                    console.log(
-                        "Fresh login detected - updating friends status"
-                    );
-
                     // Fetch friends with detailed profiles
                     const friendsData = await fetchFriendList(steamId);
 
@@ -302,14 +298,80 @@ router.get("/friends", ensureAuth, async (req, res) => {
     }
 });
 
-// @desc    Demo Friend Detail Page
-// @route   GET /demo/friends/:friendName
-router.get("/friends/:friendName", (req, res) => {
-    res.render("pages/dashboard/friend-detail", {
-        user,
-        friend,
-        title: `${friend.displayName}'s Game Stats`,
-    });
+// @desc    Friend Detail Page
+// @route   GET /friends/:steamId
+router.get("/friends/:steamId", ensureAuth, async (req, res) => {
+    try {
+        const user = req.user;
+        const steamId = req.params.steamId;
+
+        console.log("Friend identifier:", steamId);
+
+        // Get the full user document from MongoDB
+        const userDoc = await User.findById(user._id);
+
+        // Convert Mongoose document to plain JavaScript object
+        const userObj = userDoc.toObject();
+
+        // Find the specific friend by Steam ID
+        const friend =
+            userObj.steamCache?.steamData?.friends?.friendslist?.friends.find(
+                (f) => f.steamid === steamId
+            );
+
+        if (!friend) {
+            return res.status(404).render("errors/404", {
+                message: "Friend not found",
+            });
+        }
+
+        // Fetch this friend's games
+        const friendGames = await fetchOwnedGames(steamId);
+
+        // Process and format the friend's games data
+        let formattedFriendGames = [];
+        if (friendGames && friendGames.response && friendGames.response.games) {
+            formattedFriendGames = friendGames.response.games.map((game) => ({
+                ...game,
+                name: game.name,
+                appid: game.appid,
+                playtime_forever_hours: (game.playtime_forever / 60).toFixed(1),
+                playtime_2weeks_hours: game.playtime_2weeks
+                    ? (game.playtime_2weeks / 60).toFixed(1)
+                    : 0,
+                header_image: `https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/header.jpg`,
+                last_played_date:
+                    game.rtime_last_played && game.playtime_forever > 0
+                        ? new Date(
+                              game.rtime_last_played * 1000
+                          ).toLocaleDateString()
+                        : "Never",
+                rtime_last_played_ms: game.rtime_last_played
+                    ? game.rtime_last_played * 1000
+                    : null,
+            }));
+
+            // Sort by total playtime (most hours first)
+            formattedFriendGames.sort(
+                (a, b) => b.playtime_forever - a.playtime_forever
+            );
+        }
+
+        // Create a complete friend object with all the data
+        const friendWithGames = {
+            ...friend,
+            games: formattedFriendGames,
+        };
+
+        res.render("pages/dashboard/friend-detail", {
+            user: userObj,
+            friend: friendWithGames,
+            title: `${friend.personaname}'s Game Stats`,
+        });
+    } catch (error) {
+        console.error("Friend detail route error:", error);
+        res.render("errors/500");
+    }
 });
 
 // @desc    Demo Stats

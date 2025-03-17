@@ -1,10 +1,10 @@
 <section class="wrapper" id="stats">
     <div class="game-card-container">
-        {{#each friend.steamGames}}
+        {{#each friend.games}}
             <div class="game-card">
                 <div class="game-card__image-container">
                     <img
-                        src="{{img}}"
+                        src="{{header_image}}"
                         alt="{{name}}"
                         class="game-card__image"
                     />
@@ -15,17 +15,21 @@
                 <div class="game-card__details">
                     <div class="game-card__stat">
                         <span>Total Playtime:</span>
-                        <span>{{totalPlaytime}} hrs</span>
+                        <span>{{playtime_forever_hours}} hrs</span>
                     </div>
                     <div class="game-card__stat">
                         <span>Last 2 Weeks:</span>
-                        <span>{{twoWeeksPlaytime}} hrs</span>
+                        <span>{{playtime_2weeks_hours}} hrs</span>
                     </div>
                     <div class="game-card__last-played">
                         Last Played:
-                        {{formatLastPlayed lastPlayed}}
+                        {{formatLastPlayed rtime_last_played_ms}}
                     </div>
                 </div>
+            </div>
+        {{else}}
+            <div class="no-games-message">
+                <p>No games found for this friend.</p>
             </div>
         {{/each}}
     </div>

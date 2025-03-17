@@ -1,7 +1,7 @@
 <section class="wrapper">
     <div class="container">
         {{#each steamData.friends.friendslist.friends}}
-            <div class="friend-card {{#if isOnline}}online{{else}}offline{{/if}}">
+            <div class="friend-card" data-steamId="{{steamid}}">
                 <img src="{{avatarfull}}" alt="{{personaname}} avatar" />
                 <div class="friend-info">
                     <h3 class="friend-name">{{personaname}}</h3>
