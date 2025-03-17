@@ -325,8 +325,39 @@ router.get("/demo/stats", (req, res) => {
 
 // @desc    Stats
 // @route   GET /stats
-router.get("/stats", ensureAuth, (req, res) => {
-    res.render("pages/dashboard/stats", { user: req.session.user });
+router.get("/stats", ensureAuth, async (req, res) => {
+    try {
+        const user = req.user;
+
+        // Get the full user document from MongoDB
+        const userDoc = await User.findById(user._id);
+
+        // Convert Mongoose document to plain JavaScript object
+        const userObj = userDoc.toObject();
+
+        // Create a sorted copy of the games array by playtime (most hours first)
+        let sortedGames = [];
+        if (userObj.steamCache?.gameData?.response?.games) {
+            sortedGames = [...userObj.steamCache.gameData.response.games];
+            sortedGames.sort((a, b) => {
+                return b.playtime_forever - a.playtime_forever;
+            });
+        }
+
+        // Render with the data from the database
+        res.render("pages/dashboard/stats", {
+            user: userObj,
+            gameData: {
+                response: {
+                    games: sortedGames,
+                },
+            },
+            steamData: userObj.steamCache?.steamData,
+        });
+    } catch (error) {
+        console.error("Stats route error:", error);
+        res.render("errors/500");
+    }
 });
 
 // @desc    Privacy Page

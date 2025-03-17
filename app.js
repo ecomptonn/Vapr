@@ -18,6 +18,7 @@ import {
     lte,
     or,
     recentGames,
+    multiply,
 } from "./helpers/hbs.js";
 
 // Import routes
@@ -45,6 +46,7 @@ app.engine(
             calendarTime,
             sortFriendStatus,
             recentGames,
+            multiply,
             eq,
             gt,
             lt,

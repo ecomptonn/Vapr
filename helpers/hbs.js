@@ -84,12 +84,18 @@ const lte = (a, b) => {
     return a <= b;
 };
 
+// Operation Helpers
+const multiply = (a, b) => {
+    return a * b;
+};
+
 export {
     formatDate,
     formatLastPlayed,
     calendarTime,
     sortFriendStatus,
     recentGames,
+    multiply,
     eq,
     gt,
     lt,
