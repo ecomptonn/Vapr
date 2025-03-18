@@ -26,6 +26,28 @@ async function fetchOwnedGames(steamId) {
             data.response.games = [];
         }
 
+        // Process the games to add additional fields
+        if (data.response && data.response.games) {
+            data.response.games = data.response.games.map((game) => {
+                return {
+                    ...game,
+                    playtime_forever_hours: (
+                        game.playtime_forever / 60
+                    ).toFixed(1),
+                    playtime_2weeks_hours: game.playtime_2weeks
+                        ? (game.playtime_2weeks / 60).toFixed(1)
+                        : 0,
+                    header_image: `https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/header.jpg`,
+                    // Determine if last played timestamp is available
+                    last_played_date: game.rtime_last_played
+                        ? new Date(
+                              game.rtime_last_played * 1000
+                          ).toLocaleDateString()
+                        : "Not available",
+                };
+            });
+        }
+
         return data;
     } catch (error) {
         console.error("Error in fetchOwnedGames:", error);

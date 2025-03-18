@@ -470,8 +470,6 @@ router.get("/friends/:steamId", ensureAuth, async (req, res) => {
 
         // Get the full user document from MongoDB
         const userDoc = await User.findById(user._id);
-
-        // Convert Mongoose document to plain JavaScript object
         const userObj = userDoc.toObject();
 
         // Find the specific friend by Steam ID
@@ -481,56 +479,39 @@ router.get("/friends/:steamId", ensureAuth, async (req, res) => {
             );
 
         if (!friend) {
-            return res.status(404).render("errors/404", {
-                message: "Friend not found",
-            });
+            return res
+                .status(404)
+                .render("errors/404", { message: "Friend not found" });
         }
 
-        // Fetch this friend's games
+        // Fetch this friend's games - already processed by the enhanced fetchOwnedGames
         const friendGames = await fetchOwnedGames(steamId);
 
-        // Process and format the friend's games data
-        let formattedFriendGames = [];
-        if (friendGames && friendGames.response && friendGames.response.games) {
-            formattedFriendGames = friendGames.response.games.map((game) => ({
-                ...game,
-                name: game.name,
-                appid: game.appid,
-                playtime_forever_hours: (game.playtime_forever / 60).toFixed(1),
-                playtime_2weeks_hours: game.playtime_2weeks
-                    ? (game.playtime_2weeks / 60).toFixed(1)
-                    : 0,
-                header_image: `https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/header.jpg`,
-                last_played_date: (() => {
-                    // Handle cases where rtime_last_played exists but might be 0
-                    if (game.rtime_last_played && game.rtime_last_played > 0) {
-                        const date = new Date(game.rtime_last_played * 1000);
-                        return date.toLocaleDateString();
-                    } else {
-                        return "Never";
-                    }
-                })(),
-                rtime_last_played_ms: game.rtime_last_played
-                    ? game.rtime_last_played * 1000
-                    : null,
-            }));
-
-            // Sort by total playtime (most hours first)
-            formattedFriendGames.sort(
-                (a, b) => b.playtime_forever - a.playtime_forever
+        // Check if privacy might be limiting data
+        let privacyLimited = false;
+        if (friendGames?.response?.games?.length > 0) {
+            // Check if rtime_last_played is missing for all games
+            privacyLimited = !friendGames.response.games.some(
+                (game) => game.rtime_last_played
             );
         }
+
+        // Sort games by playtime since timestamps may not be available
+        const sortedGames = [...(friendGames?.response?.games || [])].sort(
+            (a, b) => b.playtime_forever - a.playtime_forever
+        );
 
         // Create a complete friend object with all the data
         const friendWithGames = {
             ...friend,
-            games: formattedFriendGames,
+            games: sortedGames,
         };
 
         res.render("pages/dashboard/friend-detail", {
             user: userObj,
             friend: friendWithGames,
             title: `${friend.personaname}'s Game Stats`,
+            privacyLimited: privacyLimited,
         });
     } catch (error) {
         console.error("Friend detail route error:", error);
