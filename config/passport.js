@@ -23,8 +23,9 @@ export default function configurePassport(passport) {
     passport.use(
         new SteamStrategy(
             {
-                returnURL: "http://localhost:3000/auth/steam/return",
-                realm: "http://localhost:3000/",
+                returnURL:
+                    "https://vapr-5a2f79f96cb3.herokuapp.com/auth/steam/return",
+                realm: "https://vapr-5a2f79f96cb3.herokuapp.com/",
                 apiKey: process.env.STEAM_API_KEY,
             },
             async (identifier, profile, done) => {
