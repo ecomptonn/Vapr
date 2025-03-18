@@ -339,15 +339,9 @@ router.get("/friends/:steamId", ensureAuth, async (req, res) => {
                     : 0,
                 header_image: `https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/header.jpg`,
                 last_played_date: (() => {
-                    console.log(
-                        `Game ${game.name} rtime_last_played:`,
-                        game.rtime_last_played
-                    );
-
                     // Handle cases where rtime_last_played exists but might be 0
                     if (game.rtime_last_played && game.rtime_last_played > 0) {
                         const date = new Date(game.rtime_last_played * 1000);
-                        console.log(`Converted date for ${game.name}:`, date);
                         return date.toLocaleDateString();
                     } else {
                         return "Never";
