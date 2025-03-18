@@ -26,8 +26,26 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
         const user = req.user;
         const steamId = user.steamId;
 
+        console.log(`Dashboard access for user ${steamId}`);
+
         // Get the full user document from MongoDB
         const userDoc = await User.findById(user._id);
+
+        // Initialize steamCache if it doesn't exist
+        if (!userDoc.steamCache) {
+            console.log(`Initializing steamCache for user ${steamId}`);
+            userDoc.steamCache = {
+                gameData: null,
+                steamData: {},
+                timestamp: null,
+            };
+        }
+
+        // Initialize steamData if it doesn't exist
+        if (!userDoc.steamCache.steamData) {
+            console.log(`Initializing steamData for user ${steamId}`);
+            userDoc.steamCache.steamData = {};
+        }
 
         // Check if game data needs update (once per 24 hours)
         const gameDataNeedsUpdate =
@@ -36,8 +54,13 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
             Date.now() - new Date(userDoc.steamCache.timestamp).getTime() >
                 24 * 60 * 60 * 1000;
 
+        console.log(
+            `Game data needs update: ${gameDataNeedsUpdate} for user ${steamId}`
+        );
+
         // Always update friends on login, but only update games data if needed
         const freshLogin = req.session.freshLogin || false;
+        console.log(`Fresh login: ${freshLogin} for user ${steamId}`);
 
         if (gameDataNeedsUpdate || freshLogin) {
             try {
@@ -48,7 +71,12 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
 
                 if (gameDataNeedsUpdate) {
                     // Fetch and process game data
+                    console.log(`Fetching owned games for user ${steamId}`);
                     gameData = await fetchOwnedGames(steamId);
+                    console.log(`Games data received for user ${steamId}:`, {
+                        hasGames: !!gameData?.response?.games,
+                        gameCount: gameData?.response?.games?.length || 0,
+                    });
 
                     if (
                         gameData &&
@@ -92,21 +120,35 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                         gameData.response.games = formattedGames;
 
                         recentGames = formattedGames
-                            .filter((game) => game.rtime_last_played)
+                            .filter(
+                                (game) =>
+                                    game.rtime_last_played &&
+                                    game.rtime_last_played > 0
+                            )
                             .slice(0, 8); // show only 8 games (for dashboard home)
+
+                        console.log(
+                            `Processed ${recentGames.length} recent games for user ${steamId}`
+                        );
+                        if (recentGames.length > 0) {
+                            console.log(
+                                `First recent game: ${recentGames[0].name}, Last played: ${recentGames[0].last_played_date}`
+                            );
+                        } else {
+                            console.log(
+                                `No recent games found for user ${steamId}`
+                            );
+                        }
                     }
                 }
 
                 // Always fetch fresh friends data on login
                 if (freshLogin) {
                     // Fetch friends with detailed profiles
+                    console.log(`Fetching friends for Steam ID: ${steamId}`);
                     const friendsData = await fetchFriendList(steamId);
 
-                    console.log(
-                        "Fetching friends for Steam ID:",
-                        user?.steamId
-                    );
-                    if (!user?.steamId) {
+                    if (!steamId) {
                         console.error(
                             "Missing Steam ID, cannot fetch friend list."
                         );
@@ -120,6 +162,9 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                         friendsData.friendslist &&
                         friendsData.friendslist.friends
                     ) {
+                        console.log(
+                            `Found ${friendsData.friendslist.friends.length} friends for user ${steamId}`
+                        );
                         const friendIds = friendsData.friendslist.friends
                             .map((friend) => friend.steamid)
                             .join(",");
@@ -132,6 +177,10 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                             friendProfiles.response &&
                             friendProfiles.response.players
                         ) {
+                            console.log(
+                                `Fetched ${friendProfiles.response.players.length} friend profiles for user ${steamId}`
+                            );
+
                             // Process all friends
                             const allFriends =
                                 friendProfiles.response.players.map(
@@ -188,20 +237,29 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                                     );
                                 });
 
+                            const onlineFriends = allFriends
+                                .filter((friend) => friend.isOnline)
+                                .sort((a, b) =>
+                                    a.personaname.localeCompare(b.personaname)
+                                );
+
                             processedFriends = {
                                 friendslist: {
                                     friends: sortedFriends,
-                                    onlineFriends: allFriends
-                                        .filter((friend) => friend.isOnline)
-                                        .sort((a, b) =>
-                                            a.personaname.localeCompare(
-                                                b.personaname
-                                            )
-                                        ),
+                                    onlineFriends: onlineFriends,
                                     activeFriends: activeFriends,
                                 },
                             };
+
+                            console.log(
+                                `Processed friend data: ${sortedFriends.length} total, ${onlineFriends.length} online, ${activeFriends.length} active`
+                            );
                         }
+                    }
+
+                    // Ensure steamData exists
+                    if (!userDoc.steamCache.steamData) {
+                        userDoc.steamCache.steamData = {};
                     }
 
                     // Update only the friends data in the user document
@@ -209,33 +267,85 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                         ...userDoc.steamCache.steamData,
                         friends: processedFriends,
                     };
+
+                    console.log(
+                        `Friends data set in document for user ${steamId}`
+                    );
                 }
 
                 // Check if game data needs to update
                 if (gameDataNeedsUpdate) {
+                    console.log(`Updating game data for user ${steamId}`);
                     userDoc.steamCache.gameData = gameData;
+
+                    // Ensure steamData exists
+                    if (!userDoc.steamCache.steamData) {
+                        userDoc.steamCache.steamData = {};
+                    }
+
                     userDoc.steamCache.steamData.recentGames = {
                         response: {
                             games: recentGames,
                         },
                     };
                     userDoc.steamCache.timestamp = new Date();
+
+                    console.log(
+                        `RecentGames set in document for user ${steamId}, count: ${recentGames.length}`
+                    );
                 }
 
                 // Save the updated document
-                await userDoc.save();
+                console.log(`Saving user document for ${steamId}`);
+                try {
+                    await userDoc.save();
+                    console.log(
+                        `User document saved successfully for ${steamId}`
+                    );
+
+                    // Verify save
+                    const verifyDoc = await User.findById(user._id);
+                    const verifyCount =
+                        verifyDoc.steamCache?.steamData?.recentGames?.response
+                            ?.games?.length || 0;
+                    console.log(
+                        `Verification: ${verifyCount} recent games saved for user ${steamId}`
+                    );
+                } catch (saveError) {
+                    console.error(
+                        `Error saving user document for ${steamId}:`,
+                        saveError
+                    );
+                }
 
                 // Clear the fresh login flag
                 if (req.session) {
                     req.session.freshLogin = false;
                 }
             } catch (error) {
-                console.error("Error fetching/processing Steam data:", error);
+                console.error(
+                    `Error fetching/processing Steam data for ${steamId}:`,
+                    error
+                );
             }
         }
 
         // Convert Mongoose document to plain js object
         const userObj = userDoc.toObject();
+
+        // Log what we're sending to the view
+        console.log(`Rendering dashboard for ${steamId}:`, {
+            hasRecentGames:
+                !!userObj.steamCache?.steamData?.recentGames?.response?.games,
+            recentGamesCount:
+                userObj.steamCache?.steamData?.recentGames?.response?.games
+                    ?.length || 0,
+            hasFriends:
+                !!userObj.steamCache?.steamData?.friends?.friendslist?.friends,
+            friendsCount:
+                userObj.steamCache?.steamData?.friends?.friendslist?.friends
+                    ?.length || 0,
+        });
 
         // Render with the data from the database
         res.render("pages/dashboard/home", {
