@@ -102,6 +102,17 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                     // Fetch friends with detailed profiles
                     const friendsData = await fetchFriendList(steamId);
 
+                    console.log(
+                        "Fetching friends for Steam ID:",
+                        user?.steamId
+                    );
+                    if (!user?.steamId) {
+                        console.error(
+                            "Missing Steam ID, cannot fetch friend list."
+                        );
+                        return;
+                    }
+
                     // Process friend data
                     let processedFriends = { friendslist: { friends: [] } };
                     if (
