@@ -41,3 +41,11 @@ main {
     flex-wrap: wrap;
     gap: 10px;
 }
+
+.no-games-message {
+    font-size: 30px;
+
+    a {
+        text-decoration: underline;
+    }
+}

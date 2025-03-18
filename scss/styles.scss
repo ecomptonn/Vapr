@@ -1,11 +1,9 @@
 // Import base settings
 @import "./base/reset";
 @import "./base/variables";
-@import "./base/mixins";
 @import "./base/globals";
 
 // Import partials
-@import "./components/buttons";
 @import "./components/carousel";
 @import "./components/friend-card";
 @import "./components/game-card";

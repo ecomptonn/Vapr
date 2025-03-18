@@ -92,6 +92,13 @@ main {
   gap: 10px;
 }
 
+.no-games-message {
+  font-size: 30px;
+}
+.no-games-message a {
+  text-decoration: underline;
+}
+
 .carousel-container {
   position: relative;
   margin-bottom: 24px;
