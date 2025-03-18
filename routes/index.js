@@ -110,6 +110,22 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
                             })
                         );
 
+                        console.log("Sample game timestamps:");
+                        for (
+                            let i = 0;
+                            i < Math.min(formattedGames.length, 5);
+                            i++
+                        ) {
+                            console.log(
+                                `Game: ${
+                                    formattedGames[i].name
+                                }, rtime_last_played: ${
+                                    formattedGames[i].rtime_last_played
+                                }, type: ${typeof formattedGames[i]
+                                    .rtime_last_played}`
+                            );
+                        }
+
                         formattedGames.sort((a, b) => {
                             return (
                                 (b.rtime_last_played || 0) -
@@ -119,13 +135,30 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
 
                         gameData.response.games = formattedGames;
 
+                        // First try to get games with recent timestamps
                         recentGames = formattedGames
                             .filter(
                                 (game) =>
                                     game.rtime_last_played &&
                                     game.rtime_last_played > 0
                             )
-                            .slice(0, 8); // show only 8 games (for dashboard home)
+                            .slice(0, 8);
+
+                        // If no recent games found, fall back to showing games by playtime
+                        if (recentGames.length === 0) {
+                            console.log(
+                                `No games with timestamps for user ${steamId}, falling back to playtime sort`
+                            );
+                            recentGames = [...formattedGames]
+                                .sort(
+                                    (a, b) =>
+                                        b.playtime_forever - a.playtime_forever
+                                )
+                                .slice(0, 8);
+                            console.log(
+                                `Found ${recentGames.length} games by playtime for user ${steamId}`
+                            );
+                        }
 
                         console.log(
                             `Processed ${recentGames.length} recent games for user ${steamId}`
