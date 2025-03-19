@@ -484,7 +484,7 @@ router.get("/friends/:steamId", ensureAuth, async (req, res) => {
                 .render("errors/404", { message: "Friend not found" });
         }
 
-        // Fetch this friend's games - already processed by the enhanced fetchOwnedGames
+        // Fetch this friend's games
         const friendGames = await fetchOwnedGames(steamId);
 
         // Check if privacy might be limiting data
@@ -496,8 +496,17 @@ router.get("/friends/:steamId", ensureAuth, async (req, res) => {
             );
         }
 
+        // Process the games to ensure rtime_last_played_ms is available for the template
+        const processedGames =
+            friendGames?.response?.games?.map((game) => ({
+                ...game,
+                rtime_last_played_ms: game.rtime_last_played
+                    ? game.rtime_last_played * 1000
+                    : null,
+            })) || [];
+
         // Sort games by playtime since timestamps may not be available
-        const sortedGames = [...(friendGames?.response?.games || [])].sort(
+        const sortedGames = [...processedGames].sort(
             (a, b) => b.playtime_forever - a.playtime_forever
         );
 
