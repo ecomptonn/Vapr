@@ -363,7 +363,6 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
             }
         }
 
-        // Convert Mongoose document to plain js object
         const userObj = userDoc.toObject();
 
         // Log what we're sending to the view
