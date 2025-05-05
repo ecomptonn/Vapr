@@ -363,6 +363,7 @@ router.get("/dashboard", ensureAuth, async (req, res) => {
             }
         }
 
+        // Turn into plain JS object
         const userObj = userDoc.toObject();
 
         // Log what we're sending to the view
