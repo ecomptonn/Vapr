@@ -4,7 +4,6 @@ import demoUser from "../data/demoUser.js";
 import User from "../models/User.js";
 const router = express.Router();
 
-// Import steam service
 import {
     fetchFriendList,
     fetchOwnedGames,
