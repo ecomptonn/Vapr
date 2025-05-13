@@ -10,11 +10,23 @@
     background: $secondary-color;
     border-radius: 8px;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+        flex: 0 0 calc(50% - 10px); // Two cards per row on tablets
+    }
+
+    @media (max-width: 480px) {
+        flex: 0 0 100%; 
+    }
 }
 
 .game-card__image-container {
     position: relative;
     height: 150px;
+
+    @media (max-width: 480px) {
+        height: 120px; 
+    }
 }
 
 .game-card__image {

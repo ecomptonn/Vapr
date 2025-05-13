@@ -20,7 +20,6 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
@@ -58,6 +57,16 @@ table {
 html {
   font-size: 62.5%;
 }
+@media (max-width: 768px) {
+  html {
+    font-size: 58%;
+  }
+}
+@media (min-width: 1800px) {
+  html {
+    font-size: 70%;
+  }
+}
 
 body {
   font-family: "Mona Sans", "Helvetica", sans-serif;
@@ -74,6 +83,16 @@ main {
   height: 100vh;
   overflow: hidden;
 }
+@media (max-width: 768px) {
+  main {
+    height: calc(100vh - 60px);
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
 
 .flex-container {
   display: flex;
@@ -84,12 +103,16 @@ main {
   padding: 24px;
   overflow-y: auto;
 }
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 16px;
+  }
+}
 
 .container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
 .no-games-message {
@@ -106,6 +129,12 @@ main {
 .carousel-container {
   position: relative;
   margin-bottom: 24px;
+  padding: 0 20px;
+}
+@media (max-width: 768px) {
+  .carousel-container {
+    padding: 0 10px;
+  }
 }
 
 .carousel-container__content {
@@ -138,6 +167,28 @@ main {
   align-items: center;
   justify-content: center;
 }
+@media (max-width: 768px) {
+  .carousel-container__nav-button {
+    width: 30px;
+    height: 30px;
+  }
+}
+.carousel-container__nav-button--prev {
+  left: 0;
+}
+@media (min-width: 1024px) {
+  .carousel-container__nav-button--prev {
+    left: -20px;
+  }
+}
+.carousel-container__nav-button--next {
+  right: 0;
+}
+@media (min-width: 1024px) {
+  .carousel-container__nav-button--next {
+    right: -20px;
+  }
+}
 
 .carousel-container__nav-button--prev {
   left: -20px;
@@ -160,6 +211,18 @@ main {
   position: relative;
   cursor: pointer;
 }
+@media (max-width: 480px) {
+  .friend-card {
+    flex: 0 0 160px;
+    padding: 15px 10px 45px;
+  }
+}
+@media (max-width: 480px) {
+  .friend-card img {
+    width: 80px;
+    height: 80px;
+  }
+}
 
 .friend-card img {
   width: 120px;
@@ -179,6 +242,11 @@ main {
   color: var(--primary-font-color);
   margin: 0 0 10px 0;
   font-size: 1.4rem;
+}
+@media (max-width: 480px) {
+  .friend-name {
+    font-size: 1.2rem;
+  }
 }
 
 .friend-status {
@@ -224,6 +292,12 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+@media (max-width: 480px) {
+  .friend-game {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
 
 .game-card-container {
   display: flex;
@@ -238,10 +312,25 @@ main {
   border-radius: 8px;
   overflow: hidden;
 }
+@media (max-width: 768px) {
+  .game-card {
+    flex: 0 0 calc(50% - 10px);
+  }
+}
+@media (max-width: 480px) {
+  .game-card {
+    flex: 0 0 100%;
+  }
+}
 
 .game-card__image-container {
   position: relative;
   height: 150px;
+}
+@media (max-width: 480px) {
+  .game-card__image-container {
+    height: 120px;
+  }
 }
 
 .game-card__image {
@@ -473,8 +562,9 @@ main {
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  width: 450px;
-  padding: 30px 40px;
+  width: 90%;
+  max-width: 450px;
+  padding: 5%;
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
@@ -504,21 +594,23 @@ main {
   color: #333;
   margin: 20px 0;
 }
-
-.demo-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 150px;
-  margin: 10px auto;
-  background-color: #333;
-  color: #fff;
-  font-size: 1.6rem;
-  text-decoration: none;
-  padding: 5px 0;
+@media (min-width: 768px) {
+  .popup {
+    padding: 30px 40px;
+  }
+}
+@media (max-width: 768px) {
+  .popup h2 {
+    font-size: 1.8rem;
+  }
+}
+@media (max-width: 768px) {
+  .popup p {
+    font-size: 1.2rem;
+  }
 }
 
+.demo-btn,
 .login-btn {
   display: flex;
   align-items: center;
@@ -532,7 +624,15 @@ main {
   text-decoration: none;
   padding: 5px 0;
 }
-.login-btn .steam-icon {
+@media (max-width: 768px) {
+  .demo-btn,
+  .login-btn {
+    width: 130px;
+    font-size: 1.4rem;
+  }
+}
+
+.steam-icon {
   width: 24px;
   height: 24px;
 }

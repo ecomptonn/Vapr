@@ -6,6 +6,14 @@
 
 html {
     font-size: 62.5%;
+
+    @media (max-width: 768px) {
+        font-size: 58%;
+    }
+
+    @media (min-width: 1800px) {
+        font-size: 70%;
+    }
 }
 
 body {
@@ -23,6 +31,15 @@ body {
 main {
     height: 100vh;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+        height: calc(100vh - 60px);
+    }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 .flex-container {
@@ -33,13 +50,16 @@ main {
     height: 100%;
     padding: 24px;
     overflow-y: auto;
+
+    @media (max-width: 768px) {
+        padding: 16px;
+    }
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .no-games-message {

@@ -10,6 +10,18 @@
     overflow: hidden;
     position: relative;
     cursor: pointer;
+
+    @media (max-width: 480px) {
+        flex: 0 0 160px;
+        padding: 15px 10px 45px;
+    }
+
+    img {
+        @media (max-width: 480px) {
+            width: 80px;
+            height: 80px;
+        }
+    }
 }
 
 .friend-card img {
@@ -30,6 +42,10 @@
     color: var(--primary-font-color);
     margin: 0 0 10px 0;
     font-size: 1.4rem;
+
+    @media (max-width: 480px) {
+        font-size: 1.2rem;
+    }
 }
 
 .friend-status {
@@ -71,4 +87,9 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media (max-width: 480px) {
+        font-size: 12px;
+        padding: 8px;
+    }
 }
