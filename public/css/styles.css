@@ -368,11 +368,97 @@ img {
   margin-top: 12px;
 }
 
+.hamburger-menu {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1003;
+  background-color: #181b22;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.hamburger-menu .hamburger-icon {
+  width: 24px;
+  height: 18px;
+  position: relative;
+}
+.hamburger-menu .hamburger-icon span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 4px;
+  transition: all 0.3s ease;
+}
+.hamburger-menu .hamburger-icon span:last-child {
+  margin-bottom: 0;
+}
+.hamburger-menu.active .hamburger-icon span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 6px;
+  position: relative;
+}
+.hamburger-menu.active .hamburger-icon span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-menu.active .hamburger-icon span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: -6px;
+  position: relative;
+}
+@media (min-width: 769px) {
+  .hamburger-menu {
+    display: none !important;
+  }
+}
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: block;
+  }
+}
+
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.mobile-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
 .sidebar-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   padding: 14px 34px 14px 22px;
+  transition: transform 0.3s ease;
+}
+@media (max-width: 768px) {
+  .sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1002;
+    transform: translateX(-100%);
+    width: 320px;
+    padding: 14px 20px;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+  }
+  .sidebar-wrapper.active {
+    transform: translateX(0);
+  }
 }
 
 .nav-wrapper {
@@ -383,12 +469,22 @@ img {
   background-color: #181b22;
   border-radius: 12px;
 }
+@media (max-width: 768px) {
+  .nav-wrapper {
+    width: 100%;
+  }
+}
 
 .profile-section {
   display: flex;
   align-items: center;
   margin: 0 0 36px 0;
   padding: 0 0 0 10px;
+}
+@media (max-width: 768px) {
+  .profile-section {
+    margin: 60px 0 24px 0;
+  }
 }
 .profile-section .profile-container {
   width: 100%;
@@ -405,9 +501,20 @@ img {
   -o-object-fit: cover;
      object-fit: cover;
 }
+@media (max-width: 768px) {
+  .profile-section .profile-container .profile-info .profile-image {
+    width: 60px;
+    height: 45px;
+  }
+}
 .profile-section .profile-container .profile-info .profile-name {
   font-size: 1.5rem;
   font-weight: 500;
+}
+@media (max-width: 768px) {
+  .profile-section .profile-container .profile-info .profile-name {
+    font-size: 1.4rem;
+  }
 }
 
 .logo-section {
@@ -431,6 +538,11 @@ img {
   background-clip: text;
   color: transparent;
 }
+@media (max-width: 768px) {
+  .logo-section .logo .logo-text {
+    font-size: 2.2rem;
+  }
+}
 
 .nav {
   display: flex;
@@ -450,13 +562,34 @@ img {
   font-size: 1.5rem;
   font-weight: 500;
   color: #7a7a7c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+@media (max-width: 768px) {
+  .nav .nav-item {
+    width: 100%;
+    height: 56px;
+    font-size: 1.4rem;
+    padding: 0 0 0 20px;
+  }
 }
 .nav .nav-item svg {
   width: 35px;
   height: 35px;
 }
+@media (max-width: 768px) {
+  .nav .nav-item svg {
+    width: 30px;
+    height: 30px;
+  }
+}
 .nav .nav-item:first-child {
   margin: 86px 0 0 0;
+}
+@media (max-width: 768px) {
+  .nav .nav-item:first-child {
+    margin: 40px 0 0 0;
+  }
 }
 .nav .nav-item:hover {
   color: #fff;
@@ -478,6 +611,12 @@ img {
   font-size: 1.4rem;
   text-decoration: underline;
 }
+@media (max-width: 768px) {
+  .nav .privacy-link {
+    justify-content: center;
+    margin: 0 0 20px 0;
+  }
+}
 
 .main-wrapper {
   height: 100%;
@@ -486,6 +625,12 @@ img {
   justify-content: space-between;
   overflow-y: auto;
   padding: 24px;
+}
+@media (max-width: 768px) {
+  .main-wrapper {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 .privacy-wrapper {
