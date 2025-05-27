@@ -11,12 +11,34 @@
     position: relative;
     cursor: pointer;
 
+    @media (max-width: 768px) {
+        flex: 0 0 200px;
+        padding: 20px 12px 45px;
+    }
+
     @media (max-width: 480px) {
-        flex: 0 0 160px;
-        padding: 15px 10px 45px;
+        flex: 0 0 180px;
+        padding: 15px 10px 40px;
+    }
+
+    @media (max-width: 360px) {
+        flex: 0 0 100%;
     }
 
     img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: white;
+        padding: 4px;
+        margin: 0 0 10px 0;
+        object-fit: cover;
+
+        @media (max-width: 768px) {
+            width: 100px;
+            height: 100px;
+        }
+
         @media (max-width: 480px) {
             width: 80px;
             height: 80px;
@@ -39,9 +61,14 @@
 }
 
 .friend-name {
-    color: var(--primary-font-color);
+    color: $primary-font-color;
     margin: 0 0 10px 0;
     font-size: 1.4rem;
+    font-weight: $font-weight-md;
+
+    @media (max-width: 768px) {
+        font-size: 1.3rem;
+    }
 
     @media (max-width: 480px) {
         font-size: 1.2rem;
@@ -58,19 +85,29 @@
     gap: 5px;
     margin: 0;
 
+    @media (max-width: 480px) {
+        padding: 4px 8px;
+        font-size: 1.1rem;
+    }
+
+    &::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+
+        @media (max-width: 480px) {
+            width: 6px;
+            height: 6px;
+        }
+    }
+
     @each $status, $color in $status-colors {
-        &.#{$status}::before {
+        &.#{to-lower-case($status)}::before {
             background-color: $color;
         }
     }
-}
-
-.friend-status::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
 }
 
 .friend-game {
@@ -88,8 +125,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
         font-size: 12px;
         padding: 8px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 11px;
+        padding: 6px;
     }
 }

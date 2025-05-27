@@ -96,6 +96,15 @@ img {
 
 .flex-container {
   display: flex;
+  min-height: 100vh;
+  height: auto;
+}
+@media (max-width: 768px) {
+  .flex-container {
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+  }
 }
 
 .wrapper {
@@ -106,13 +115,36 @@ img {
 @media (max-width: 768px) {
   .wrapper {
     padding: 16px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+}
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 12px;
   }
 }
 
-.container {
+body[data-page=friends] .container,
+.wrapper:has(.friend-card) .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px;
+}
+@media (max-width: 768px) {
+  body[data-page=friends] .container,
+  .wrapper:has(.friend-card) .container {
+    gap: 15px;
+  }
+}
+@media (max-width: 480px) {
+  body[data-page=friends] .container,
+  .wrapper:has(.friend-card) .container {
+    gap: 12px;
+  }
 }
 
 .no-games-message {
@@ -129,15 +161,8 @@ img {
 .carousel-container {
   position: relative;
   margin-bottom: 24px;
-  padding: 0 20px;
 }
-@media (max-width: 768px) {
-  .carousel-container {
-    padding: 0 10px;
-  }
-}
-
-.carousel-container__content {
+.carousel-container .carousel-container__content {
   display: flex;
   gap: 16px;
   overflow-x: scroll;
@@ -146,9 +171,17 @@ img {
   padding: 8px 0;
   scrollbar-width: none;
 }
-
-.carousel-container__content::-webkit-scrollbar {
+.carousel-container .carousel-container__content::-webkit-scrollbar {
   display: none;
+}
+.carousel-container .carousel-container__content .friend-card {
+  flex: 0 0 240px;
+  min-height: 280px;
+}
+@media (max-width: 768px) {
+  .carousel-container .carousel-container .carousel-container__content .friend-card {
+    flex: 0 0 200px;
+  }
 }
 
 .carousel-container__nav-button {
@@ -167,37 +200,40 @@ img {
   align-items: center;
   justify-content: center;
 }
-@media (max-width: 768px) {
-  .carousel-container__nav-button {
-    width: 30px;
-    height: 30px;
-  }
-}
-.carousel-container__nav-button--prev {
-  left: 0;
-}
-@media (min-width: 1024px) {
-  .carousel-container__nav-button--prev {
-    left: -20px;
-  }
-}
-.carousel-container__nav-button--next {
-  right: 0;
-}
-@media (min-width: 1024px) {
-  .carousel-container__nav-button--next {
-    right: -20px;
-  }
-}
-
 .carousel-container__nav-button--prev {
   left: -20px;
 }
-
 .carousel-container__nav-button--next {
   right: -20px;
 }
+@media (max-width: 768px) {
+  .carousel-container__nav-button .carousel-container__nav-button {
+    width: 35px;
+    height: 35px;
+  }
+  .carousel-container__nav-button .carousel-container__nav-button--prev {
+    left: 0;
+  }
+  .carousel-container__nav-button .carousel-container__nav-button--next {
+    right: 0;
+  }
+}
 
+@media (max-width: 768px) {
+  .carousel-container .carousel-container__content .friend-card {
+    flex: 0 0 200px;
+  }
+  .carousel-container .carousel-container__nav-button {
+    width: 35px;
+    height: 35px;
+  }
+  .carousel-container .carousel-container__nav-button--prev {
+    left: 0;
+  }
+  .carousel-container .carousel-container__nav-button--next {
+    right: 0;
+  }
+}
 .friend-card {
   flex: 0 0 240px;
   display: flex;
@@ -211,10 +247,37 @@ img {
   position: relative;
   cursor: pointer;
 }
+@media (max-width: 768px) {
+  .friend-card {
+    flex: 0 0 200px;
+    padding: 20px 12px 45px;
+  }
+}
 @media (max-width: 480px) {
   .friend-card {
-    flex: 0 0 160px;
-    padding: 15px 10px 45px;
+    flex: 0 0 180px;
+    padding: 15px 10px 40px;
+  }
+}
+@media (max-width: 360px) {
+  .friend-card {
+    flex: 0 0 100%;
+  }
+}
+.friend-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: white;
+  padding: 4px;
+  margin: 0 0 10px 0;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+@media (max-width: 768px) {
+  .friend-card img {
+    width: 100px;
+    height: 100px;
   }
 }
 @media (max-width: 480px) {
@@ -239,9 +302,15 @@ img {
 }
 
 .friend-name {
-  color: var(--primary-font-color);
+  color: #fff;
   margin: 0 0 10px 0;
   font-size: 1.4rem;
+  font-weight: 500;
+}
+@media (max-width: 768px) {
+  .friend-name {
+    font-size: 1.3rem;
+  }
 }
 @media (max-width: 480px) {
   .friend-name {
@@ -259,22 +328,33 @@ img {
   gap: 5px;
   margin: 0;
 }
-.friend-status.Online::before {
-  background-color: #4caf50;
+@media (max-width: 480px) {
+  .friend-status {
+    padding: 4px 8px;
+    font-size: 1.1rem;
+  }
 }
-.friend-status.Offline::before {
-  background-color: #f44336;
-}
-.friend-status.Away::before {
-  background-color: #e2861c;
-}
-
 .friend-status::before {
   content: "";
   width: 8px;
   height: 8px;
   border-radius: 50%;
   display: inline-block;
+}
+@media (max-width: 480px) {
+  .friend-status::before {
+    width: 6px;
+    height: 6px;
+  }
+}
+.friend-status.online::before {
+  background-color: #4caf50;
+}
+.friend-status.offline::before {
+  background-color: #f44336;
+}
+.friend-status.away::before {
+  background-color: #e2861c;
 }
 
 .friend-game {
@@ -292,10 +372,16 @@ img {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .friend-game {
     font-size: 12px;
     padding: 8px;
+  }
+}
+@media (max-width: 480px) {
+  .friend-game {
+    font-size: 11px;
+    padding: 6px;
   }
 }
 
@@ -630,6 +716,8 @@ img {
   .main-wrapper {
     width: 100%;
     margin-left: 0;
+    height: 100%;
+    overflow-y: auto;
   }
 }
 
