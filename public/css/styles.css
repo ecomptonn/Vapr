@@ -96,14 +96,10 @@ img {
 
 .flex-container {
   display: flex;
-  min-height: 100vh;
-  height: auto;
 }
 @media (max-width: 768px) {
   .flex-container {
     flex-direction: column;
-    height: auto;
-    min-height: auto;
   }
 }
 
@@ -125,19 +121,27 @@ img {
   }
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 body[data-page=friends] .container,
 .wrapper:has(.friend-card) .container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
 }
 @media (max-width: 768px) {
   body[data-page=friends] .container,
   .wrapper:has(.friend-card) .container {
     gap: 15px;
+    justify-content: center;
   }
 }
 @media (max-width: 480px) {
@@ -148,7 +152,17 @@ body[data-page=friends] .container,
 }
 
 .no-games-message {
-  font-size: 30px;
+  font-size: 3rem;
+}
+@media (max-width: 768px) {
+  .no-games-message {
+    font-size: 2.5rem;
+  }
+}
+@media (max-width: 480px) {
+  .no-games-message {
+    font-size: 2rem;
+  }
 }
 .no-games-message a {
   text-decoration: underline;
@@ -156,6 +170,21 @@ body[data-page=friends] .container,
 
 .privacy-disclaimer {
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+}
+
+.show-on-mobile {
+  display: none;
+}
+@media (max-width: 768px) {
+  .show-on-mobile {
+    display: block;
+  }
 }
 
 .carousel-container {
@@ -235,7 +264,6 @@ body[data-page=friends] .container,
   }
 }
 .friend-card {
-  flex: 0 0 240px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -246,6 +274,12 @@ body[data-page=friends] .container,
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 0 0 240px;
+}
+.friend-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 @media (max-width: 768px) {
   .friend-card {
@@ -257,11 +291,6 @@ body[data-page=friends] .container,
   .friend-card {
     flex: 0 0 180px;
     padding: 15px 10px 40px;
-  }
-}
-@media (max-width: 360px) {
-  .friend-card {
-    flex: 0 0 100%;
   }
 }
 .friend-card img {
@@ -285,15 +314,6 @@ body[data-page=friends] .container,
     width: 80px;
     height: 80px;
   }
-}
-
-.friend-card img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: white;
-  padding: 4px;
-  margin: 0 0 10px 0;
 }
 
 .friend-info {
@@ -361,7 +381,7 @@ body[data-page=friends] .container,
   color: #fff;
   bottom: 0;
   margin: 5px 0 0 0;
-  font-size: 14px;
+  font-size: 1.4rem;
   position: absolute;
   padding: 10px;
   right: 0;
@@ -374,14 +394,69 @@ body[data-page=friends] .container,
 }
 @media (max-width: 768px) {
   .friend-game {
-    font-size: 12px;
+    font-size: 1.2rem;
     padding: 8px;
   }
 }
 @media (max-width: 480px) {
   .friend-game {
-    font-size: 11px;
+    font-size: 1.1rem;
     padding: 6px;
+  }
+}
+
+.wrapper .container:has(.friend-card):not(.carousel-container__content) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+@media (max-width: 768px) {
+  .wrapper .container:has(.friend-card):not(.carousel-container__content) {
+    gap: 15px;
+    justify-content: center;
+  }
+}
+@media (max-width: 480px) {
+  .wrapper .container:has(.friend-card):not(.carousel-container__content) {
+    gap: 12px;
+  }
+}
+.wrapper .container:has(.friend-card):not(.carousel-container__content) .friend-card {
+  flex: 1 1 calc(25% - 15px);
+  min-width: 240px;
+}
+@media (max-width: 1200px) {
+  .wrapper .container:has(.friend-card):not(.carousel-container__content) .friend-card {
+    flex: 1 1 calc(33.333% - 14px);
+  }
+}
+@media (max-width: 900px) {
+  .wrapper .container:has(.friend-card):not(.carousel-container__content) .friend-card {
+    flex: 1 1 calc(50% - 10px);
+  }
+}
+@media (max-width: 600px) {
+  .wrapper .container:has(.friend-card):not(.carousel-container__content) .friend-card {
+    flex: 1 1 100%;
+  }
+}
+
+.carousel-container__content .friend-card {
+  flex: 0 0 240px;
+}
+@media (max-width: 768px) {
+  .carousel-container__content .friend-card {
+    flex: 0 0 200px;
+  }
+}
+@media (max-width: 480px) {
+  .carousel-container__content .friend-card {
+    flex: 0 0 180px;
   }
 }
 

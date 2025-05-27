@@ -1,5 +1,4 @@
 .friend-card {
-    flex: 0 0 240px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,6 +9,13 @@
     overflow: hidden;
     position: relative;
     cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 0 0 240px;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
 
     @media (max-width: 768px) {
         flex: 0 0 200px;
@@ -19,10 +25,6 @@
     @media (max-width: 480px) {
         flex: 0 0 180px;
         padding: 15px 10px 40px;
-    }
-
-    @media (max-width: 360px) {
-        flex: 0 0 100%;
     }
 
     img {
@@ -44,15 +46,6 @@
             height: 80px;
         }
     }
-}
-
-.friend-card img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: white;
-    padding: 4px;
-    margin: 0 0 10px 0;
 }
 
 .friend-info {
@@ -114,7 +107,7 @@
     color: #fff;
     bottom: 0;
     margin: 5px 0 0 0;
-    font-size: 14px;
+    font-size: 1.4rem;
     position: absolute;
     padding: 10px;
     right: 0;
@@ -126,12 +119,65 @@
     text-overflow: ellipsis;
 
     @media (max-width: 768px) {
-        font-size: 12px;
+        font-size: 1.2rem;
         padding: 8px;
     }
 
     @media (max-width: 480px) {
-        font-size: 11px;
+        font-size: 1.1rem;
         padding: 6px;
+    }
+}
+
+.wrapper .container {
+    &:has(.friend-card):not(.carousel-container__content) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+
+        @media (max-width: 768px) {
+            gap: 15px;
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            gap: 12px;
+        }
+
+        .friend-card {
+            flex: 1 1 calc(25% - 15px);
+            min-width: 240px;
+
+            @media (max-width: 1200px) {
+                flex: 1 1 calc(33.333% - 14px);
+            }
+
+            @media (max-width: 900px) {
+                flex: 1 1 calc(50% - 10px);
+            }
+
+            @media (max-width: 600px) {
+                flex: 1 1 100%;
+            }
+        }
+    }
+}
+
+.carousel-container__content {
+    .friend-card {
+        flex: 0 0 240px;
+
+        @media (max-width: 768px) {
+            flex: 0 0 200px;
+        }
+
+        @media (max-width: 480px) {
+            flex: 0 0 180px;
+        }
     }
 }
